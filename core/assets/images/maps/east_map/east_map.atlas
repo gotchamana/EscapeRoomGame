@@ -1,0 +1,41 @@
+
+east_map.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 2, 24
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+fireplace_top
+  rotate: false
+  xy: 2, 2
+  size: 153, 20
+  orig: 153, 20
+  offset: 0, 0
+  index: -1
+item
+  rotate: false
+  xy: 644, 307
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+toolbox_close
+  rotate: false
+  xy: 801, 451
+  size: 130, 53
+  orig: 130, 53
+  offset: 0, 0
+  index: -1
+toolbox_open
+  rotate: false
+  xy: 644, 409
+  size: 155, 95
+  orig: 155, 95
+  offset: 0, 0
+  index: -1
