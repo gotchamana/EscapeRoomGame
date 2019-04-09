@@ -112,7 +112,10 @@ public class ERScreen implements Screen {
 		TouchableSprite fireplaceTop = new TouchableSprite(createSprite(mapAtlas, "fireplace_top"));
 		fireplaceTop.setCenterX(321);
 		fireplaceTop.setY(312 - fireplaceTop.getHeight());
-		fireplaceTop.setTouchDownHandler(() -> System.out.println("Touch down"));
+		fireplaceTop.setOnTouchDown(e -> {
+			System.out.println("Touch down");
+			return true;
+		});
 
 		// 工具箱
 		TouchableSprite toolboxClose = new TouchableSprite(createSprite(mapAtlas, "toolbox_close"));
@@ -120,36 +123,45 @@ public class ERScreen implements Screen {
 
 		toolboxClose.setX(440);
 		toolboxClose.setY(422 - toolboxClose.getHeight());
-		toolboxClose.setTouchDownHandler(() -> {
+		toolboxClose.setOnTouchDown(e -> {
 			toolboxClose.setVisible(false);
 			toolboxClose.setTouchable(false);
 
 			toolboxOpen.setVisible(true);
 			toolboxOpen.setTouchable(true);
+			return true;
 		});
 
 		toolboxOpen.setCenter(toolboxClose.getX() + toolboxClose.getWidth() / 2, toolboxClose.getY() + toolboxClose.getHeight() / 2);
-		toolboxOpen.setTouchDownHandler(() -> {
+		toolboxOpen.setOnTouchDown(e -> {
 			toolboxClose.setVisible(true);
 			toolboxClose.setTouchable(true);
 
 			toolboxOpen.setVisible(false);
 			toolboxOpen.setTouchable(false);
+			return true;
 		});
 
 		TouchableSprite item1 = new TouchableSprite(createSprite(mapAtlas, "item"));
-		item1.setTouchDownHandler(() -> {
+		item1.setOnTouchDown(e -> {
 			eastMap.removeSprite(item1);
 			itemTray.addItem(Item.LIGHTER);
+			return true;
 		});
 		item1.setCenter(640 / 2, 480 / 2);
 
 		// 箭頭
 		TouchableSprite arrowLeft = createArrow(ArrowType.LEFT, uiAtlas);
-		arrowLeft.setTouchDownHandler(() -> System.out.println("Down"));
+		arrowLeft.setOnTouchDown(e -> {
+			System.out.println("Down");
+			return true;
+		});
 
 		TouchableSprite arrowRight = createArrow(ArrowType.RIGHT, uiAtlas);
-		arrowRight.setTouchDownHandler(() -> currentMap = southMap);
+		arrowRight.setOnTouchDown(e -> {
+			currentMap = southMap;
+			return true;
+		});
 
 		eastMap.addSprites(bg, fireplaceTop, toolboxClose, toolboxOpen, arrowLeft, arrowRight);
 
@@ -159,10 +171,16 @@ public class ERScreen implements Screen {
 		bg = createSprite(mapAtlas, "bg");
 
 		arrowLeft = createArrow(ArrowType.LEFT, uiAtlas);
-		arrowLeft.setTouchDownHandler(() -> currentMap = eastMap);
+		arrowLeft.setOnTouchDown(e -> {
+			currentMap = eastMap;
+			return true;
+		});
 
 		arrowRight = createArrow(ArrowType.RIGHT, uiAtlas);
-		arrowRight.setTouchDownHandler(() -> System.out.println("Down"));
+		arrowRight.setOnTouchDown(e -> {
+			System.out.println("Down");
+			return false;
+		});
 
 		southMap = new Map();
 		southMap.addSprites(bg, arrowLeft, arrowRight);

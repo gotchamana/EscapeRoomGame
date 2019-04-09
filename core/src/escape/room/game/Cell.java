@@ -29,7 +29,10 @@ public class Cell {
 		this.item = item;
 
 		itemSprite = new TouchableSprite(item.getSprite());
-		itemSprite.setTouchDownHandler(() -> isSelected = true);
+		itemSprite.setOnTouchDown(e -> {
+			isSelected = true;
+			return true;
+		});
 		itemSprite.setPosition(posX, posY);
 	}
 

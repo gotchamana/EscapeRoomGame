@@ -15,9 +15,10 @@ public class ERScreenInputHandler extends InputAdapter {
 		TouchableSprite[] touchableSprites = screen.getCurrentMap().getTouchableSprites();
 
 		for (TouchableSprite touchableSprite : touchableSprites) {
-			if (touchableSprite.getBoundingRectangle().contains(screenX, screenY) && touchableSprite.isTouchable()) {
-				touchableSprite.onTouchDown();
-				return true;
+			if (touchableSprite.getBoundingRectangle().contains(screenX, screenY)) {
+				if (touchableSprite.onTouchDown(new TouchEvent(screenX, screenY, pointer, button))) {
+					return true;
+				}
 			}
 		}
 
@@ -29,9 +30,10 @@ public class ERScreenInputHandler extends InputAdapter {
 		TouchableSprite[] touchableSprites = screen.getCurrentMap().getTouchableSprites();
 
 		for (TouchableSprite touchableSprite : touchableSprites) {
-			if (touchableSprite.getBoundingRectangle().contains(screenX, screenY) && touchableSprite.isTouchable()) {
-				touchableSprite.onTouchUp();
-				return true;
+			if (touchableSprite.getBoundingRectangle().contains(screenX, screenY)) {
+				if (touchableSprite.onTouchUp(new TouchEvent(screenX, screenY, pointer, button))) {
+					return true;
+				}
 			}
 		}
 

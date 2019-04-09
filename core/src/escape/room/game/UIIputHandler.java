@@ -30,8 +30,7 @@ public class UIIputHandler extends InputAdapter {
 				
 				// 檢查滑鼠是否座落於道具方格中，以決定是否執行sprite的onTouchDown方法
 				if (sprite.getBoundingRectangle().contains(screenX, screenY)) {
-					sprite.onTouchDown();
-					result = true;
+					result = sprite.onTouchDown(new TouchEvent(screenX, screenY, pointer, button));
 				}
 
 			}
@@ -54,7 +53,7 @@ public class UIIputHandler extends InputAdapter {
 				TouchableSprite sprite = cell.getItemSprite();
 				
 				if (sprite.getBoundingRectangle().contains(screenX, screenY)) {
-					sprite.onTouchUp();
+					sprite.onTouchUp(new TouchEvent(screenX, screenY, pointer, button));
 				}
 
 				return true;

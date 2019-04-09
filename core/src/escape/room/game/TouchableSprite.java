@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class TouchableSprite extends Sprite implements Touchable {
 
 	private boolean isVisible, isTouchable;
-	private TouchEventHandler touchDownHandler, touchUpHandler;
+	private TouchEventHandler touchDownHandler, touchDraggedHandler, touchUpHandler;
 
 	public TouchableSprite(Sprite sprite) {
 		super(sprite);
@@ -26,22 +26,27 @@ public class TouchableSprite extends Sprite implements Touchable {
 	}
 
 	@Override
-	public void onTouchDown() {
-		if (touchDownHandler != null) {
-			touchDownHandler.handle();
+	public boolean onTouchDown(TouchEvent event) {
+		if (touchDownHandler != null && isTouchable) {
+			return touchDownHandler.handle(event);
 		}
+		return false;
 	}
 
 	@Override
-	public void onTouchDragged(int deltaX, int deltaY) {
-		
+	public boolean onTouchDragged(TouchEvent event) {
+		if (touchDraggedHandler != null && isTouchable) {
+			return touchDownHandler.handle(event);
+		}
+		return false;
 	}
 
 	@Override
-	public void onTouchUp() {
-		if (touchUpHandler != null) {
-			touchUpHandler.handle();
+	public boolean onTouchUp(TouchEvent event) {
+		if (touchUpHandler != null && isTouchable) {
+			return touchUpHandler.handle(event);
 		}
+		return false;
 	}
 
 	@Override
@@ -54,11 +59,11 @@ public class TouchableSprite extends Sprite implements Touchable {
 		this.isTouchable = isTouchable;
 	}
 
-	public void setTouchDownHandler(TouchEventHandler touchDownHandler) {
+	public void setOnTouchDown(TouchEventHandler touchDownHandler) {
 		this.touchDownHandler = touchDownHandler;
 	}
 
-	public void setTouchUpHandler(TouchEventHandler touchUpHandler) {
+	public void setOnTouchUp(TouchEventHandler touchUpHandler) {
 		this.touchUpHandler = touchUpHandler;
 	}
 

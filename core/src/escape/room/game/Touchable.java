@@ -2,11 +2,11 @@ package escape.room.game;
 
 public interface Touchable {
 
-	public void onTouchDown();
+	public boolean onTouchDown(TouchEvent event);
 
-	public void onTouchDragged(int deltaX, int deltaY);
+	public boolean onTouchDragged(TouchEvent event);
 
-	public void onTouchUp();
+	public boolean onTouchUp(TouchEvent event);
 
 	public boolean isTouchable();
 
