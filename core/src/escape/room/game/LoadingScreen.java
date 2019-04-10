@@ -73,6 +73,8 @@ public class LoadingScreen implements Screen {
 		assetManager.load("images/uis/ui.atlas", TextureAtlas.class);
 		assetManager.load("images/icons/icon.atlas", TextureAtlas.class);
 		assetManager.load("images/maps/east_map/east_map.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/east_map_fireplace_top/east_map_fireplace_top.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/east_map_fireplace_front/east_map_fireplace_front.atlas", TextureAtlas.class);
 		assetManager.load("images/maps/south_map/south_map.atlas", TextureAtlas.class);
 
 		assetManager.finishLoadingAsset("fonts/font.fnt");

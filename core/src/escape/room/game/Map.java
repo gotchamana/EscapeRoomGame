@@ -37,7 +37,11 @@ public class Map {
 	}
 
 	public TouchableSprite[] getTouchableSprites() {
-		return touchableSprites.toArray(TouchableSprite.class);
+		touchableSprites.reverse();
+		TouchableSprite[] rlt = touchableSprites.toArray(TouchableSprite.class);
+		touchableSprites.reverse();
+
+		return rlt;
 	}
 
 	public void draw(Batch batch) {

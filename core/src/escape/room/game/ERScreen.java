@@ -32,7 +32,7 @@ public class ERScreen implements Screen {
 	private SpriteBatch batch;
 
 	private ItemTray itemTray;
-	private Map currentMap, eastMap, southMap, westMap, northMap;
+	private Map currentMap, eastMap, eastMapFireplaceTop, eastMapFireplaceFront, southMap, westMap, northMap;
 
 	public ERScreen(EscapeRoomGame game) {
 		this.game = game;
@@ -50,8 +50,6 @@ public class ERScreen implements Screen {
 		initMap();
 
 		batch = new SpriteBatch();
-
-		Gdx.input.setInputProcessor(new InputMultiplexer(new ERScreenInputHandler(this), new UIIputHandler(itemTray)));
 	}
 
 	@Override
@@ -75,6 +73,7 @@ public class ERScreen implements Screen {
 
 	@Override
 	public void show() {
+		Gdx.input.setInputProcessor(new InputMultiplexer(new ERScreenInputHandler(this), new UIIputHandler(itemTray)));
 	}
 
 	@Override
@@ -102,18 +101,48 @@ public class ERScreen implements Screen {
 
 		// 東邊地圖
 		TextureAtlas mapAtlas = assetManager.get("images/maps/east_map/east_map.atlas");
-
 		eastMap = new Map();
 
 		// 背景
 		Sprite bg = createSprite(mapAtlas, "bg");
 
+		// 空洞
+		TouchableSprite hole = new TouchableSprite(createSprite(mapAtlas, "hole"));
+		hole.setPosition(297, 141);
+
+		// 木頭
+		// TouchableSprite wood = new TouchableSprite(createSprite(mapAtlas, "wood"), true, false);
+		TouchableSprite wood = new TouchableSprite(createSprite(mapAtlas, "wood"));
+		wood.setPosition(305, 405);
+		wood.setOnTouchDown(e -> {
+			currentMap = eastMapFireplaceFront;
+			return true;
+		});
+
 		// 壁爐頂端
 		TouchableSprite fireplaceTop = new TouchableSprite(createSprite(mapAtlas, "fireplace_top"));
-		fireplaceTop.setCenterX(321);
-		fireplaceTop.setY(312 - fireplaceTop.getHeight());
+		fireplaceTop.setCenterX(323);
+		fireplaceTop.setY(318 - fireplaceTop.getHeight());
 		fireplaceTop.setOnTouchDown(e -> {
-			System.out.println("Touch down");
+			currentMap = eastMapFireplaceTop;
+			return true;
+		});
+
+		// 鎚子
+		TouchableSprite hammer = new TouchableSprite(createSprite(mapAtlas, "hammer"), false);
+		hammer.setPosition(460, 400);
+		hammer.setOnTouchDown(e -> {
+			eastMap.removeSprite(hammer);
+			itemTray.addItem(Item.LIGHTER);
+			return true;
+		});
+
+		// 鋸子
+		TouchableSprite saw = new TouchableSprite(createSprite(mapAtlas, "saw"), false);
+		saw.setPosition(450, 360);
+		saw.setOnTouchDown(e -> {
+			eastMap.removeSprite(saw);
+			itemTray.addItem(Item.LIGHTER);
 			return true;
 		});
 
@@ -129,6 +158,12 @@ public class ERScreen implements Screen {
 
 			toolboxOpen.setVisible(true);
 			toolboxOpen.setTouchable(true);
+
+			hammer.setVisible(true);
+			hammer.setTouchable(true);
+
+			saw.setVisible(true);
+			saw.setTouchable(true);
 			return true;
 		});
 
@@ -139,6 +174,12 @@ public class ERScreen implements Screen {
 
 			toolboxOpen.setVisible(false);
 			toolboxOpen.setTouchable(false);
+
+			hammer.setVisible(false);
+			hammer.setTouchable(false);
+
+			saw.setVisible(false);
+			saw.setTouchable(false);
 			return true;
 		});
 
@@ -153,7 +194,6 @@ public class ERScreen implements Screen {
 		// 箭頭
 		TouchableSprite arrowLeft = createArrow(ArrowType.LEFT, uiAtlas);
 		arrowLeft.setOnTouchDown(e -> {
-			System.out.println("Down");
 			return true;
 		});
 
@@ -163,7 +203,57 @@ public class ERScreen implements Screen {
 			return true;
 		});
 
-		eastMap.addSprites(bg, fireplaceTop, toolboxClose, toolboxOpen, arrowLeft, arrowRight);
+		eastMap.addSprites(bg, hole, wood, fireplaceTop, toolboxClose, toolboxOpen, hammer, saw, arrowLeft, arrowRight);
+
+		// 東邊地圖之壁爐上方
+		mapAtlas = assetManager.get("images/maps/east_map_fireplace_top/east_map_fireplace_top.atlas");
+		eastMapFireplaceTop = new Map();
+
+		// 背景
+		bg = createSprite(mapAtlas, "bg");
+
+		// 打火機
+		TouchableSprite lighter = new TouchableSprite(createSprite(mapAtlas, "lighter"));
+		lighter.setPosition(100, 200);
+		lighter.setOnTouchDown(e -> {
+			eastMapFireplaceTop.removeSprite(lighter);
+			itemTray.addItem(Item.LIGHTER);
+			return true;
+		});
+
+		// 箭頭
+		TouchableSprite arrowDown = createArrow(ArrowType.DOWN, uiAtlas);
+		arrowDown.setOnTouchDown(e -> {
+			currentMap = eastMap;
+			return true;
+		});
+
+		eastMapFireplaceTop.addSprites(bg, lighter, arrowDown);
+
+		// 東邊地圖之壁爐前方
+		mapAtlas = assetManager.get("images/maps/east_map_fireplace_front/east_map_fireplace_front.atlas");
+		eastMapFireplaceFront = new Map();
+
+		// 背景
+		bg = createSprite(mapAtlas, "bg");
+
+		// 鑰匙
+		TouchableSprite key = new TouchableSprite(createSprite(mapAtlas, "key"));
+		key.setPosition(275, 425);
+		key.setOnTouchDown(e -> {
+			eastMapFireplaceFront.removeSprite(key);
+			itemTray.addItem(Item.LIGHTER);
+			return true;
+		});
+
+		// 箭頭
+		arrowDown = createArrow(ArrowType.DOWN, uiAtlas);
+		arrowDown.setOnTouchDown(e -> {
+			currentMap = eastMap;
+			return true;
+		});
+
+		eastMapFireplaceFront.addSprites(bg, key, arrowDown);
 
 		// 南邊地圖
 		mapAtlas = assetManager.get("images/maps/south_map/south_map.atlas");

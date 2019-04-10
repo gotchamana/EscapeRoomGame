@@ -1,0 +1,20 @@
+
+east_map_fireplace_top.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 2, 2
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+lighter
+  rotate: false
+  xy: 644, 394
+  size: 57, 88
+  orig: 57, 88
+  offset: 0, 0
+  index: -1

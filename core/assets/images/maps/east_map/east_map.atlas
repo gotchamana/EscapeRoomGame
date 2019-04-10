@@ -6,7 +6,7 @@ filter: Nearest,Nearest
 repeat: none
 bg
   rotate: false
-  xy: 2, 24
+  xy: 2, 23
   size: 640, 480
   orig: 640, 480
   offset: 0, 0
@@ -14,28 +14,56 @@ bg
 fireplace_top
   rotate: false
   xy: 2, 2
-  size: 153, 20
-  orig: 153, 20
+  size: 153, 19
+  orig: 153, 19
+  offset: 0, 0
+  index: -1
+hammer
+  rotate: false
+  xy: 644, 270
+  size: 103, 34
+  orig: 103, 34
+  offset: 0, 0
+  index: -1
+hole
+  rotate: false
+  xy: 933, 455
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
 item
   rotate: false
-  xy: 644, 307
+  xy: 644, 306
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
+saw
+  rotate: false
+  xy: 801, 419
+  size: 115, 29
+  orig: 115, 29
+  offset: 0, 0
+  index: -1
 toolbox_close
   rotate: false
-  xy: 801, 451
+  xy: 801, 450
   size: 130, 53
   orig: 130, 53
   offset: 0, 0
   index: -1
 toolbox_open
   rotate: false
-  xy: 644, 409
+  xy: 644, 408
   size: 155, 95
   orig: 155, 95
+  offset: 0, 0
+  index: -1
+wood
+  rotate: false
+  xy: 644, 248
+  size: 36, 20
+  orig: 36, 20
   offset: 0, 0
   index: -1
