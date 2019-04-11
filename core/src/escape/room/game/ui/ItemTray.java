@@ -1,7 +1,8 @@
-package escape.room.game;
+package escape.room.game.ui;
 
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.utils.Array;
+import java.util.Objects;
 
 public class ItemTray {
 	
@@ -13,9 +14,7 @@ public class ItemTray {
 	private Array<Cell> cells;
 
 	private ItemTray() {
-		if (uiAtlas == null) {
-			throw new NullPointerException("uiAtlas is null");
-		}
+		Objects.requireNonNull(uiAtlas, "UI TextureAtlas is null");
 
 		traySprite = uiAtlas.createSprite("bar");
 		traySprite.setPosition(640, 0);

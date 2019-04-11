@@ -1,14 +1,14 @@
-package escape.room.game;
+package escape.room.game.screen;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.GL20;
+import escape.room.game.EscapeRoomGame;
 
 public class LoadingScreen implements Screen {
 	
 	private EscapeRoomGame game;
-	private ERScreen gameScreen;
 	private AssetManager assetManager;
 	private SpriteBatch batch;
 	private BitmapFont font;
@@ -31,8 +31,7 @@ public class LoadingScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		if (assetManager.update()) {
-			gameScreen = new ERScreen(game);
-			game.setScreen(gameScreen);
+			game.setScreen(ScreenManager.getERScreen(game));
 		}
 
 		String progress = "Loading " + (int)(assetManager.getProgress() * 100) + "%";
@@ -45,7 +44,6 @@ public class LoadingScreen implements Screen {
 	@Override
 	public void dispose() {
 		batch.dispose();
-		gameScreen.dispose();
 	}
 
 	@Override

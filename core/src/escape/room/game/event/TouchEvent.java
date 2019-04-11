@@ -1,4 +1,4 @@
-package escape.room.game;
+package escape.room.game.event;
 
 public class TouchEvent {
 	

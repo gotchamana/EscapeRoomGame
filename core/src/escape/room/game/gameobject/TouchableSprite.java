@@ -1,6 +1,8 @@
-package escape.room.game;
+package escape.room.game.gameobject;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import escape.room.game.event.*;
+import escape.room.game.Touchable;
 
 public class TouchableSprite extends Sprite implements Touchable {
 

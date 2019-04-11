@@ -1,6 +1,8 @@
-package escape.room.game;
+package escape.room.game.event;
 
 import com.badlogic.gdx.InputAdapter;
+import escape.room.game.gameobject.TouchableSprite;
+import escape.room.game.ui.*;
 
 public class UIIputHandler extends InputAdapter {
 

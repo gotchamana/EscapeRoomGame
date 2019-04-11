@@ -1,5 +1,7 @@
 package escape.room.game;
 
+import escape.room.game.event.TouchEvent;
+
 public interface Touchable {
 
 	public boolean onTouchDown(TouchEvent event);

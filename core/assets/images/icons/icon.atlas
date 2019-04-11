@@ -1,12 +1,33 @@
 
 icon.png
-size: 64,64
+size: 256,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-lighter_icon
+hammer_icon
   rotate: false
   xy: 2, 2
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+key_icon
+  rotate: false
+  xy: 44, 2
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+lighter_icon
+  rotate: false
+  xy: 86, 2
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+saw_icon
+  rotate: false
+  xy: 128, 2
   size: 40, 40
   orig: 40, 40
   offset: 0, 0

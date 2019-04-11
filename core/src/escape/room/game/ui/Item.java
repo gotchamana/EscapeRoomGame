@@ -1,10 +1,11 @@
-package escape.room.game;
+package escape.room.game.ui;
 
 import com.badlogic.gdx.graphics.g2d.*;
+import java.util.Objects;
 
 public enum Item {
 
-	LIGHTER("lighter_icon");
+	LIGHTER("lighter_icon"), HAMMER("hammer_icon"), SAW("saw_icon"), KEY("key_icon");
 
 	private static TextureAtlas itemIconAtlas;
 	private String fileName;
@@ -20,10 +21,9 @@ public enum Item {
 
 	public Sprite getSprite() {
 		if (sprite == null) {
-			if (itemIconAtlas == null) {
-				throw new NullPointerException("itemIconAtlas is null");
-			}
+			Objects.requireNonNull(itemIconAtlas, "icon TextureAtlas is null");
 			sprite = itemIconAtlas.createSprite(fileName);
+			sprite.flip(false, true);
 		}
 
 		return sprite;

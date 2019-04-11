@@ -1,0 +1,34 @@
+
+west_map_right_drawer_puzzle.png
+size: 1024,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+puzzle1
+  rotate: false
+  xy: 532, 60
+  size: 186, 131
+  orig: 186, 131
+  offset: 0, 0
+  index: -1
+puzzle2
+  rotate: false
+  xy: 2, 19
+  size: 189, 172
+  orig: 189, 172
+  offset: 0, 0
+  index: -1
+puzzle3
+  rotate: false
+  xy: 373, 2
+  size: 157, 189
+  orig: 157, 189
+  offset: 0, 0
+  index: -1
+puzzle4
+  rotate: false
+  xy: 193, 10
+  size: 178, 181
+  orig: 178, 181
+  offset: 0, 0
+  index: -1

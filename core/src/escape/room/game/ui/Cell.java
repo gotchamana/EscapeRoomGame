@@ -1,6 +1,7 @@
-package escape.room.game;
+package escape.room.game.ui;
 
 import com.badlogic.gdx.graphics.g2d.*;
+import escape.room.game.gameobject.TouchableSprite;
 
 public class Cell {
 	

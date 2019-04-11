@@ -1,29 +1,16 @@
-package escape.room.game;
+package escape.room.game.screen;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.assets.AssetManager;
+import escape.room.game.*;
+import escape.room.game.event.*;
+import escape.room.game.gameobject.*;
+import escape.room.game.ui.*;
 
 public class ERScreen implements Screen {
-
-	private enum ArrowType {
-		DOWN("arrow_down_black"), LEFT("arrow_left_black"), RIGHT("arrow_right_black");
-
-		private String name;
-
-		private ArrowType(String name) {
-			this.name = name;
-		}
-
-		public String getName() {
-			return name;
-		}
-	}
-
-	private final int VIEWPORT_WIDTH = 640;
-	private final int VIEWPORT_HEIGHT = 480;
 
 	private EscapeRoomGame game;
 	private AssetManager assetManager;
@@ -133,7 +120,7 @@ public class ERScreen implements Screen {
 		hammer.setPosition(460, 400);
 		hammer.setOnTouchDown(e -> {
 			eastMap.removeSprite(hammer);
-			itemTray.addItem(Item.LIGHTER);
+			itemTray.addItem(Item.HAMMER);
 			return true;
 		});
 
@@ -142,7 +129,7 @@ public class ERScreen implements Screen {
 		saw.setPosition(450, 360);
 		saw.setOnTouchDown(e -> {
 			eastMap.removeSprite(saw);
-			itemTray.addItem(Item.LIGHTER);
+			itemTray.addItem(Item.SAW);
 			return true;
 		});
 
@@ -192,12 +179,13 @@ public class ERScreen implements Screen {
 		item1.setCenter(640 / 2, 480 / 2);
 
 		// 箭頭
-		TouchableSprite arrowLeft = createArrow(ArrowType.LEFT, uiAtlas);
+		TouchableSprite arrowLeft = createArrow(Arrow.ArrowType.LEFT, uiAtlas);
 		arrowLeft.setOnTouchDown(e -> {
+			game.setScreen(ScreenManager.getPuzzleScreen(game));
 			return true;
 		});
 
-		TouchableSprite arrowRight = createArrow(ArrowType.RIGHT, uiAtlas);
+		TouchableSprite arrowRight = createArrow(Arrow.ArrowType.RIGHT, uiAtlas);
 		arrowRight.setOnTouchDown(e -> {
 			currentMap = southMap;
 			return true;
@@ -222,7 +210,7 @@ public class ERScreen implements Screen {
 		});
 
 		// 箭頭
-		TouchableSprite arrowDown = createArrow(ArrowType.DOWN, uiAtlas);
+		TouchableSprite arrowDown = createArrow(Arrow.ArrowType.DOWN, uiAtlas);
 		arrowDown.setOnTouchDown(e -> {
 			currentMap = eastMap;
 			return true;
@@ -242,12 +230,12 @@ public class ERScreen implements Screen {
 		key.setPosition(275, 425);
 		key.setOnTouchDown(e -> {
 			eastMapFireplaceFront.removeSprite(key);
-			itemTray.addItem(Item.LIGHTER);
+			itemTray.addItem(Item.KEY);
 			return true;
 		});
 
 		// 箭頭
-		arrowDown = createArrow(ArrowType.DOWN, uiAtlas);
+		arrowDown = createArrow(Arrow.ArrowType.DOWN, uiAtlas);
 		arrowDown.setOnTouchDown(e -> {
 			currentMap = eastMap;
 			return true;
@@ -260,13 +248,13 @@ public class ERScreen implements Screen {
 
 		bg = createSprite(mapAtlas, "bg");
 
-		arrowLeft = createArrow(ArrowType.LEFT, uiAtlas);
+		arrowLeft = createArrow(Arrow.ArrowType.LEFT, uiAtlas);
 		arrowLeft.setOnTouchDown(e -> {
 			currentMap = eastMap;
 			return true;
 		});
 
-		arrowRight = createArrow(ArrowType.RIGHT, uiAtlas);
+		arrowRight = createArrow(Arrow.ArrowType.RIGHT, uiAtlas);
 		arrowRight.setOnTouchDown(e -> {
 			System.out.println("Down");
 			return false;
@@ -278,30 +266,11 @@ public class ERScreen implements Screen {
 		currentMap = eastMap;
 	}
 
-	private TouchableSprite createArrow(ArrowType type, TextureAtlas textureAtlas) {
-		final int PADDING = 20;
+	private Arrow createArrow(Arrow.ArrowType type, TextureAtlas textureAtlas) {
+		Arrow arrow = new Arrow(type, textureAtlas);
+		arrow.flip(false, true);
 
-		TouchableSprite touchableSprite = new TouchableSprite(createSprite(textureAtlas, type.getName()));
-		touchableSprite.setScale(0.8f);
-
-		switch (type) {
-			case DOWN: 
-				touchableSprite.setCenterX(VIEWPORT_WIDTH / 2);
-				touchableSprite.setY(VIEWPORT_HEIGHT - touchableSprite.getHeight() - PADDING);
-				break;
-
-			case LEFT:
-				touchableSprite.setX(20);
-				touchableSprite.setCenterY(VIEWPORT_HEIGHT / 2);
-				break;
-
-			case RIGHT:
-				touchableSprite.setX(VIEWPORT_WIDTH - touchableSprite.getWidth() - PADDING);
-				touchableSprite.setCenterY(VIEWPORT_HEIGHT / 2);
-				break;
-		}
-
-		return touchableSprite;
+		return arrow;
 	}
 
 	private Sprite createSprite(TextureAtlas textureAtlas, String fileName) {
