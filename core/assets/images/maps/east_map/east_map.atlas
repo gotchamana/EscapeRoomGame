@@ -11,6 +11,69 @@ bg
   orig: 640, 480
   offset: 0, 0
   index: -1
+fire
+  rotate: false
+  xy: 801, 408
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+fire
+  rotate: false
+  xy: 801, 408
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+fire
+  rotate: false
+  xy: 644, 251
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+fire
+  rotate: false
+  xy: 644, 251
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 8
+fire
+  rotate: false
+  xy: 644, 185
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+fire
+  rotate: false
+  xy: 644, 119
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+fire
+  rotate: false
+  xy: 644, 119
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
+fire
+  rotate: false
+  xy: 644, 53
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 5
+fire
+  rotate: false
+  xy: 776, 342
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 7
 fireplace_top
   rotate: false
   xy: 2, 2
@@ -20,35 +83,28 @@ fireplace_top
   index: -1
 hammer
   rotate: false
-  xy: 644, 270
+  xy: 644, 317
   size: 103, 34
   orig: 103, 34
   offset: 0, 0
   index: -1
 hole
   rotate: false
-  xy: 933, 455
+  xy: 867, 424
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-item
-  rotate: false
-  xy: 644, 306
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
 saw
   rotate: false
-  xy: 801, 419
+  xy: 801, 474
   size: 115, 29
   orig: 115, 29
   offset: 0, 0
   index: -1
 toolbox_close
   rotate: false
-  xy: 801, 450
+  xy: 644, 353
   size: 130, 53
   orig: 130, 53
   offset: 0, 0
@@ -62,7 +118,7 @@ toolbox_open
   index: -1
 wood
   rotate: false
-  xy: 644, 248
+  xy: 918, 483
   size: 36, 20
   orig: 36, 20
   offset: 0, 0

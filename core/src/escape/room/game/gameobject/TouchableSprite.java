@@ -38,7 +38,7 @@ public class TouchableSprite extends Sprite implements Touchable {
 	@Override
 	public boolean onTouchDragged(TouchEvent event) {
 		if (touchDraggedHandler != null && isTouchable) {
-			return touchDownHandler.handle(event);
+			return touchDraggedHandler.handle(event);
 		}
 		return false;
 	}
@@ -63,6 +63,10 @@ public class TouchableSprite extends Sprite implements Touchable {
 
 	public void setOnTouchDown(TouchEventHandler touchDownHandler) {
 		this.touchDownHandler = touchDownHandler;
+	}
+
+	public void setOnTouchDragged(TouchEventHandler touchDraggedHandler) {
+		this.touchDraggedHandler = touchDraggedHandler;
 	}
 
 	public void setOnTouchUp(TouchEventHandler touchUpHandler) {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.GL20;
 import escape.room.game.EscapeRoomGame;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 
 public class LoadingScreen implements Screen {
 	

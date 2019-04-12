@@ -9,6 +9,7 @@ import escape.room.game.*;
 import escape.room.game.event.*;
 import escape.room.game.gameobject.*;
 import escape.room.game.ui.*;
+import com.badlogic.gdx.utils.Array;
 
 public class ERScreen implements Screen {
 
@@ -20,6 +21,8 @@ public class ERScreen implements Screen {
 
 	private ItemTray itemTray;
 	private Map currentMap, eastMap, eastMapFireplaceTop, eastMapFireplaceFront, southMap, westMap, northMap;
+	private Animation<Sprite> fire;
+	private float stateTime;
 
 	public ERScreen(EscapeRoomGame game) {
 		this.game = game;
@@ -44,12 +47,14 @@ public class ERScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		stateTime += delta;
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
 		itemTray.draw(batch);
 		currentMap.draw(batch);
+		fire.getKeyFrame(stateTime).draw(batch);
 		batch.end();
 	}
 
@@ -170,14 +175,6 @@ public class ERScreen implements Screen {
 			return true;
 		});
 
-		TouchableSprite item1 = new TouchableSprite(createSprite(mapAtlas, "item"));
-		item1.setOnTouchDown(e -> {
-			eastMap.removeSprite(item1);
-			itemTray.addItem(Item.LIGHTER);
-			return true;
-		});
-		item1.setCenter(640 / 2, 480 / 2);
-
 		// 箭頭
 		TouchableSprite arrowLeft = createArrow(Arrow.ArrowType.LEFT, uiAtlas);
 		arrowLeft.setOnTouchDown(e -> {
@@ -191,6 +188,14 @@ public class ERScreen implements Screen {
 			return true;
 		});
 
+		Array<Sprite> fires = mapAtlas.createSprites("fire");
+		for (Sprite fireSprite : fires) {
+			fireSprite.setScale(0.8f);
+			fireSprite.setPosition(290, 360);
+			fireSprite.flip(false, true);
+		}
+		fire = new Animation<>(0.10f, fires, Animation.PlayMode.LOOP);
+
 		eastMap.addSprites(bg, hole, wood, fireplaceTop, toolboxClose, toolboxOpen, hammer, saw, arrowLeft, arrowRight);
 
 		// 東邊地圖之壁爐上方
@@ -199,6 +204,22 @@ public class ERScreen implements Screen {
 
 		// 背景
 		bg = createSprite(mapAtlas, "bg");
+
+		// 加工後龜甲
+		TouchableSprite tortoiseshellAfterProcess = new TouchableSprite(createSprite(mapAtlas, "tortoiseshell_after_process"), false);
+		tortoiseshellAfterProcess.setPosition(350, 30);
+		tortoiseshellAfterProcess.setOnTouchDown(e -> {
+			return true;
+		});
+
+		// 龜甲輪廓
+		TouchableSprite tortoiseshellOutline = new TouchableSprite(createSprite(mapAtlas, "tortoiseshell_outline"));
+		tortoiseshellOutline.setPosition(350, 30);
+		tortoiseshellOutline.setOnTouchDown(e -> {
+			tortoiseshellAfterProcess.setVisible(true);
+			tortoiseshellAfterProcess.setTouchable(true);
+			return true;
+		});
 
 		// 打火機
 		TouchableSprite lighter = new TouchableSprite(createSprite(mapAtlas, "lighter"));
@@ -216,7 +237,7 @@ public class ERScreen implements Screen {
 			return true;
 		});
 
-		eastMapFireplaceTop.addSprites(bg, lighter, arrowDown);
+		eastMapFireplaceTop.addSprites(bg, lighter, tortoiseshellOutline, tortoiseshellAfterProcess, arrowDown);
 
 		// 東邊地圖之壁爐前方
 		mapAtlas = assetManager.get("images/maps/east_map_fireplace_front/east_map_fireplace_front.atlas");
