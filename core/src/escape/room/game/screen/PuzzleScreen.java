@@ -113,6 +113,6 @@ public class PuzzleScreen implements Screen {
 			return true;
 		});
 
-		westMapRightDrawer.addSprites(puzzle1, puzzle2, puzzle3, puzzle4, arrowDown);
+		westMapRightDrawer.addDrawableObjects(puzzle1, puzzle2, puzzle3, puzzle4, arrowDown);
 	}
 }

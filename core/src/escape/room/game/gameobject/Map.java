@@ -1,38 +1,39 @@
 package escape.room.game.gameobject;
 
-import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
 import java.util.Arrays;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import escape.room.game.Drawable;
 
 public class Map {
 	
-	private Array<Sprite> sprites;
+	private Array<Drawable> drawableObjects;
 	private Array<TouchableSprite> touchableSprites;
 
 	public Map() {
-		sprites = new Array<>();
+		drawableObjects = new Array<>();
 		touchableSprites = new Array<>();
 	}
 
-	public void addSprite(Sprite sprite) {
-		sprites.add(sprite);
+	public void addDrawableObject(Drawable drawableObject) {
+		drawableObjects.add(drawableObject);
 
-		if (sprite instanceof TouchableSprite) {
-			touchableSprites.add((TouchableSprite)sprite);
+		if (drawableObject instanceof TouchableSprite) {
+			touchableSprites.add((TouchableSprite)drawableObject);
 		}
 	}
 
-	public void addSprites(Sprite... sprites) {
-		this.sprites.addAll(sprites);
+	public void addDrawableObjects(Drawable... drawableObjects) {
+		this.drawableObjects.addAll(drawableObjects);
 
-		Arrays.stream(sprites).filter(s -> s instanceof TouchableSprite).forEach(s -> touchableSprites.add((TouchableSprite)s));
+		Arrays.stream(drawableObjects).filter(s -> s instanceof TouchableSprite).forEach(s -> touchableSprites.add((TouchableSprite)s));
 	}
 
-	public void removeSprite(Sprite sprite) {
-		sprites.removeValue(sprite, true);
+	public void removeDrawableObject(Drawable drawableObject) {
+		drawableObjects.removeValue(drawableObject, true);
 
-		if (sprite instanceof TouchableSprite) {
-			touchableSprites.removeValue((TouchableSprite)sprite, true);
+		if (drawableObject instanceof TouchableSprite) {
+			touchableSprites.removeValue((TouchableSprite)drawableObject, true);
 		}
 	}
 
@@ -45,11 +46,14 @@ public class Map {
 	}
 
 	public void draw(Batch batch) {
-		for (Sprite sprite : sprites) {
-			if (sprite instanceof TouchableSprite && !((TouchableSprite)sprite).isVisible()) {
-				continue;
-			}
-			sprite.draw(batch);
+		for (Drawable drawableObject : drawableObjects) {
+			drawableObject.draw(batch);
+		}
+	}
+
+	public void draw(Batch batch, float delta) {
+		for (Drawable drawableObject : drawableObjects) {
+			drawableObject.draw(batch, delta);
 		}
 	}
 }

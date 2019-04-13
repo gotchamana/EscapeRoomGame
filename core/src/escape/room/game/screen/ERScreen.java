@@ -3,13 +3,13 @@ package escape.room.game.screen;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import escape.room.game.*;
 import escape.room.game.event.*;
 import escape.room.game.gameobject.*;
 import escape.room.game.ui.*;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class ERScreen implements Screen {
 
@@ -21,8 +21,6 @@ public class ERScreen implements Screen {
 
 	private ItemTray itemTray;
 	private Map currentMap, eastMap, eastMapFireplaceTop, eastMapFireplaceFront, southMap, westMap, northMap;
-	private Animation<Sprite> fire;
-	private float stateTime;
 
 	public ERScreen(EscapeRoomGame game) {
 		this.game = game;
@@ -47,14 +45,12 @@ public class ERScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		stateTime += delta;
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
 		itemTray.draw(batch);
-		currentMap.draw(batch);
-		fire.getKeyFrame(stateTime).draw(batch);
+		currentMap.draw(batch, delta);
 		batch.end();
 	}
 
@@ -103,7 +99,6 @@ public class ERScreen implements Screen {
 		hole.setPosition(297, 141);
 
 		// 木頭
-		// TouchableSprite wood = new TouchableSprite(createSprite(mapAtlas, "wood"), true, false);
 		TouchableSprite wood = new TouchableSprite(createSprite(mapAtlas, "wood"));
 		wood.setPosition(305, 405);
 		wood.setOnTouchDown(e -> {
@@ -124,7 +119,7 @@ public class ERScreen implements Screen {
 		TouchableSprite hammer = new TouchableSprite(createSprite(mapAtlas, "hammer"), false);
 		hammer.setPosition(460, 400);
 		hammer.setOnTouchDown(e -> {
-			eastMap.removeSprite(hammer);
+			eastMap.removeDrawableObject(hammer);
 			itemTray.addItem(Item.HAMMER);
 			return true;
 		});
@@ -133,7 +128,7 @@ public class ERScreen implements Screen {
 		TouchableSprite saw = new TouchableSprite(createSprite(mapAtlas, "saw"), false);
 		saw.setPosition(450, 360);
 		saw.setOnTouchDown(e -> {
-			eastMap.removeSprite(saw);
+			eastMap.removeDrawableObject(saw);
 			itemTray.addItem(Item.SAW);
 			return true;
 		});
@@ -188,15 +183,15 @@ public class ERScreen implements Screen {
 			return true;
 		});
 
-		Array<Sprite> fires = mapAtlas.createSprites("fire");
-		for (Sprite fireSprite : fires) {
-			fireSprite.setScale(0.8f);
-			fireSprite.setPosition(290, 360);
-			fireSprite.flip(false, true);
+		// 火焰
+		Animation<com.badlogic.gdx.graphics.g2d.Sprite> fireAnim = new Animation<>(0.10f, mapAtlas.createSprites("fire"), Animation.PlayMode.LOOP);
+		for (com.badlogic.gdx.graphics.g2d.Sprite fire: fireAnim.getKeyFrames()) {
+			fire.setScale(0.8f);
+			fire.setPosition(290, 360);
+			fire.flip(false, true);
 		}
-		fire = new Animation<>(0.10f, fires, Animation.PlayMode.LOOP);
 
-		eastMap.addSprites(bg, hole, wood, fireplaceTop, toolboxClose, toolboxOpen, hammer, saw, arrowLeft, arrowRight);
+		eastMap.addDrawableObjects(bg, hole, wood, fireAnim, fireplaceTop, toolboxClose, toolboxOpen, hammer, saw, arrowLeft, arrowRight);
 
 		// 東邊地圖之壁爐上方
 		mapAtlas = assetManager.get("images/maps/east_map_fireplace_top/east_map_fireplace_top.atlas");
@@ -225,7 +220,7 @@ public class ERScreen implements Screen {
 		TouchableSprite lighter = new TouchableSprite(createSprite(mapAtlas, "lighter"));
 		lighter.setPosition(100, 200);
 		lighter.setOnTouchDown(e -> {
-			eastMapFireplaceTop.removeSprite(lighter);
+			eastMapFireplaceTop.removeDrawableObject(lighter);
 			itemTray.addItem(Item.LIGHTER);
 			return true;
 		});
@@ -237,7 +232,7 @@ public class ERScreen implements Screen {
 			return true;
 		});
 
-		eastMapFireplaceTop.addSprites(bg, lighter, tortoiseshellOutline, tortoiseshellAfterProcess, arrowDown);
+		eastMapFireplaceTop.addDrawableObjects(bg, lighter, tortoiseshellOutline, tortoiseshellAfterProcess, arrowDown);
 
 		// 東邊地圖之壁爐前方
 		mapAtlas = assetManager.get("images/maps/east_map_fireplace_front/east_map_fireplace_front.atlas");
@@ -250,7 +245,7 @@ public class ERScreen implements Screen {
 		TouchableSprite key = new TouchableSprite(createSprite(mapAtlas, "key"));
 		key.setPosition(275, 425);
 		key.setOnTouchDown(e -> {
-			eastMapFireplaceFront.removeSprite(key);
+			eastMapFireplaceFront.removeDrawableObject(key);
 			itemTray.addItem(Item.KEY);
 			return true;
 		});
@@ -262,7 +257,7 @@ public class ERScreen implements Screen {
 			return true;
 		});
 
-		eastMapFireplaceFront.addSprites(bg, key, arrowDown);
+		eastMapFireplaceFront.addDrawableObjects(bg, key, arrowDown);
 
 		// 南邊地圖
 		mapAtlas = assetManager.get("images/maps/south_map/south_map.atlas");
@@ -282,7 +277,7 @@ public class ERScreen implements Screen {
 		});
 
 		southMap = new Map();
-		southMap.addSprites(bg, arrowLeft, arrowRight);
+		southMap.addDrawableObjects(bg, arrowLeft, arrowRight);
 
 		currentMap = eastMap;
 	}
@@ -295,7 +290,7 @@ public class ERScreen implements Screen {
 	}
 
 	private Sprite createSprite(TextureAtlas textureAtlas, String fileName) {
-		Sprite sprite = textureAtlas.createSprite(fileName);
+		Sprite sprite = new Sprite(textureAtlas.createSprite(fileName));
 		sprite.flip(false, true);
 
 		return sprite;

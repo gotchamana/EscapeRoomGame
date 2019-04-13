@@ -1,7 +1,7 @@
 package escape.room.game.gameobject;
 
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import escape.room.game.Drawable;
 
 public class PuzzleBoard extends Map {
 	
@@ -13,19 +13,19 @@ public class PuzzleBoard extends Map {
 	}
 
 	@Override
-	public void addSprite(Sprite sprite) {
-		super.addSprite(sprite);
-		if (sprite instanceof Puzzle) {
-			puzzles.add((Puzzle)sprite);
+	public void addDrawableObject(Drawable drawableObject) {
+		super.addDrawableObject(drawableObject);
+		if (drawableObject instanceof Puzzle) {
+			puzzles.add((Puzzle)drawableObject);
 		}
 	}
 
 	@Override
-	public void addSprites(Sprite... sprites) {
-		super.addSprites(sprites);
-		for (Sprite sprite : sprites) {
-			if (sprite instanceof Puzzle) {
-				puzzles.add((Puzzle)sprite);
+	public void addDrawableObjects(Drawable... drawableObjects) {
+		super.addDrawableObjects(drawableObjects);
+		for (Drawable drawableObject : drawableObjects) {
+			if (drawableObject instanceof Puzzle) {
+				puzzles.add((Puzzle)drawableObject);
 			}
 		}
 	}

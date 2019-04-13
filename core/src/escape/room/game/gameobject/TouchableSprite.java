@@ -1,29 +1,25 @@
 package escape.room.game.gameobject;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import escape.room.game.event.*;
 import escape.room.game.Touchable;
 
 public class TouchableSprite extends Sprite implements Touchable {
 
-	private boolean isVisible, isTouchable;
+	protected boolean isTouchable;
 	private TouchEventHandler touchDownHandler, touchDraggedHandler, touchUpHandler;
 
-	public TouchableSprite(Sprite sprite) {
+	public TouchableSprite(com.badlogic.gdx.graphics.g2d.Sprite sprite) {
 		super(sprite);
-		isVisible = true;
 		isTouchable = true;
 	}
 
-	public TouchableSprite(Sprite sprite, boolean isVisible) {
-		super(sprite);
-		this.isVisible = isVisible;
+	public TouchableSprite(com.badlogic.gdx.graphics.g2d.Sprite sprite, boolean isVisible) {
+		super(sprite, isVisible);
 		isTouchable = isVisible;
 	}
 
-	public TouchableSprite(Sprite sprite, boolean isVisible, boolean isTouchable) {
-		super(sprite);
-		this.isVisible = isVisible;
+	public TouchableSprite(com.badlogic.gdx.graphics.g2d.Sprite sprite, boolean isVisible, boolean isTouchable) {
+		super(sprite, isVisible);
 		this.isTouchable = isTouchable;
 	}
 
