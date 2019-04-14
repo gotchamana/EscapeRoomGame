@@ -43,6 +43,14 @@ public class UIIputHandler extends InputAdapter {
 			preSelectedCell.setSelected(false);
 		}
 
+		for (TouchableSprite sprite : itemTray.getTriangles()) {
+			if (sprite.getBoundingRectangle().contains(screenX, screenY)) {
+				if (sprite.onTouchDown(new TouchEvent(screenX, screenY, pointer, button))) {
+					break;
+				}
+			}
+		}
+
 		return result;
 	}
 

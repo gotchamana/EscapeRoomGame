@@ -53,6 +53,20 @@ bar
   orig: 60, 480
   offset: 0, 0
   index: -1
+left_triangle
+  rotate: false
+  xy: 106, 462
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+right_triangle
+  rotate: false
+  xy: 106, 440
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
 selected_cell
   rotate: false
   xy: 64, 442

@@ -2,16 +2,21 @@ package escape.room.game.ui;
 
 import com.badlogic.gdx.graphics.g2d.*;
 import escape.room.game.gameobject.TouchableSprite;
+import escape.room.game.Drawable;
 
-public class Cell {
+public class Cell implements Drawable {
 	
 	private int posX, posY;
-	private boolean isEmpty, isSelected;
+	private boolean isEmpty, isSelected, isVisible;
 	private Item item;
 	private Sprite unselectedSprite, selectedSprite;
 	private TouchableSprite itemSprite;
 
 	public Cell(TextureAtlas uiAtlas, int posX, int posY) {
+		this(uiAtlas, posX, posY, true);
+	}
+
+	public Cell(TextureAtlas uiAtlas, int posX, int posY, boolean isVisible) {
 		this.posX = posX;
 		this.posY = posY;
 
@@ -21,6 +26,7 @@ public class Cell {
 		selectedSprite = uiAtlas.createSprite("selected_cell");
 		selectedSprite.setPosition(posX, posY);
 
+		this.isVisible = isVisible;
 		isSelected = false;
 		isEmpty = true;
 	}
@@ -29,7 +35,7 @@ public class Cell {
 		isEmpty = false;
 		this.item = item;
 
-		itemSprite = new TouchableSprite(item.getSprite());
+		itemSprite = new TouchableSprite(item.getSprite(), isVisible);
 		itemSprite.setOnTouchDown(e -> {
 			isSelected = true;
 			return true;
@@ -65,15 +71,33 @@ public class Cell {
 		return isEmpty;
 	}
 
-	public void draw(Batch batch) {
-		if (isSelected) {
-			selectedSprite.draw(batch);
-		} else {
-			unselectedSprite.draw(batch);
-		}
+	@Override
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
 
 		if (!isEmpty) {
-			itemSprite.draw(batch);
+			itemSprite.setVisible(isVisible);
+			itemSprite.setTouchable(isVisible);
+		}
+	}
+
+	@Override
+	public boolean isVisible() {
+		return isVisible;
+	}
+
+	@Override
+	public void draw(Batch batch) {
+		if (isVisible) {
+			if (isSelected) {
+				selectedSprite.draw(batch);
+			} else {
+				unselectedSprite.draw(batch);
+			}
+
+			if (!isEmpty) {
+				itemSprite.draw(batch);
+			}
 		}
 	}
 }
