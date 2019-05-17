@@ -32,3 +32,10 @@ tortoiseshell_outline
   orig: 210, 298
   offset: 0, 0
   index: -1
+tortoiseshell_with_code
+  rotate: false
+  xy: 214, 92
+  size: 210, 298
+  orig: 210, 298
+  offset: 0, 0
+  index: -1

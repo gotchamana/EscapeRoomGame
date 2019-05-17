@@ -1,0 +1,41 @@
+
+north_map_desk.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 2, 142
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+drawer_close
+  rotate: false
+  xy: 2, 2
+  size: 421, 31
+  orig: 421, 31
+  offset: 0, 0
+  index: -1
+drawer_open
+  rotate: false
+  xy: 2, 35
+  size: 421, 105
+  orig: 421, 105
+  offset: 0, 0
+  index: -1
+knife
+  rotate: false
+  xy: 644, 600
+  size: 197, 22
+  orig: 197, 22
+  offset: 0, 0
+  index: -1
+map
+  rotate: false
+  xy: 425, 102
+  size: 96, 38
+  orig: 96, 38
+  offset: 0, 0
+  index: -1

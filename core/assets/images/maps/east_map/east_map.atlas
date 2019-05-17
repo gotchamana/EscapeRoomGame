@@ -102,6 +102,13 @@ saw
   orig: 115, 29
   offset: 0, 0
   index: -1
+slate
+  rotate: false
+  xy: 710, 270
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
 toolbox_close
   rotate: false
   xy: 644, 353

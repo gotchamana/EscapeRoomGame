@@ -1,34 +1,76 @@
 
 west_map_right_drawer.png
-size: 1024,256
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+bg
+  rotate: false
+  xy: 2, 524
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+puzzle
+  rotate: false
+  xy: 2, 72
+  size: 231, 450
+  orig: 231, 450
+  offset: 0, 0
+  index: -1
 puzzle1
   rotate: false
-  xy: 532, 60
-  size: 186, 131
-  orig: 186, 131
+  xy: 2, 2
+  size: 127, 68
+  orig: 127, 68
   offset: 0, 0
   index: -1
 puzzle2
   rotate: false
-  xy: 2, 19
-  size: 189, 172
-  orig: 189, 172
+  xy: 235, 258
+  size: 132, 105
+  orig: 132, 105
   offset: 0, 0
   index: -1
 puzzle3
   rotate: false
-  xy: 373, 2
-  size: 157, 189
-  orig: 157, 189
+  xy: 390, 412
+  size: 159, 110
+  orig: 159, 110
   offset: 0, 0
   index: -1
 puzzle4
   rotate: false
-  xy: 193, 10
-  size: 178, 181
-  orig: 178, 181
+  xy: 551, 438
+  size: 88, 84
+  orig: 88, 84
+  offset: 0, 0
+  index: -1
+puzzle5
+  rotate: false
+  xy: 786, 872
+  size: 159, 132
+  orig: 159, 132
+  offset: 0, 0
+  index: -1
+puzzle6
+  rotate: false
+  xy: 235, 365
+  size: 153, 157
+  orig: 153, 157
+  offset: 0, 0
+  index: -1
+puzzle7
+  rotate: false
+  xy: 644, 667
+  size: 125, 139
+  orig: 125, 139
+  offset: 0, 0
+  index: -1
+puzzle8
+  rotate: false
+  xy: 644, 808
+  size: 140, 196
+  orig: 140, 196
   offset: 0, 0
   index: -1

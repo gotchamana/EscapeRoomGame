@@ -1,0 +1,20 @@
+
+west_map_plant.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 2, 2
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+slate
+  rotate: false
+  xy: 644, 412
+  size: 106, 70
+  orig: 106, 70
+  offset: 0, 0
+  index: -1

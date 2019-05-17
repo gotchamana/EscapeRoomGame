@@ -1,0 +1,83 @@
+
+west_map.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 2, 24
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+hole
+  rotate: false
+  xy: 644, 103
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+left_drawer_close
+  rotate: false
+  xy: 644, 217
+  size: 108, 47
+  orig: 108, 47
+  offset: 0, 0
+  index: -1
+left_drawer_open
+  rotate: false
+  xy: 965, 443
+  size: 53, 61
+  orig: 53, 61
+  offset: 0, 0
+  index: -1
+plant
+  rotate: false
+  xy: 644, 266
+  size: 111, 238
+  orig: 111, 238
+  offset: 0, 0
+  index: -1
+puzzle
+  rotate: false
+  xy: 2, 2
+  size: 43, 20
+  orig: 43, 20
+  offset: 0, 0
+  index: -1
+right_drawer_close
+  rotate: false
+  xy: 757, 315
+  size: 108, 47
+  orig: 108, 47
+  offset: 0, 0
+  index: -1
+right_drawer_open
+  rotate: false
+  xy: 644, 153
+  size: 58, 62
+  orig: 58, 62
+  offset: 0, 0
+  index: -1
+slate
+  rotate: false
+  xy: 757, 268
+  size: 45, 45
+  orig: 45, 45
+  offset: 0, 0
+  index: -1
+tape
+  rotate: false
+  xy: 867, 337
+  size: 33, 25
+  orig: 33, 25
+  offset: 0, 0
+  index: -1
+tv
+  rotate: false
+  xy: 757, 364
+  size: 206, 140
+  orig: 206, 140
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1439"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="code3.svg">
+  <defs
+     id="defs1433" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="31.611215"
+     inkscape:cy="619.41548"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1360"
+     inkscape:window-height="742"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata1436">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:5.29199974;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 120.80869,51.514324 C 98.892594,56.325175 101.03074,74.387775 101.03074,74.387775 V 234.78365 M 75.328364,76.789611 c 0,0 -2.718118,12.96912 3.45545,19.27625 7.42681,7.587489 33.940306,11.131439 46.414736,-0.65692 3.68326,-3.4807 2.29053,-18.61933 2.29053,-18.61933 M 64.103041,116.50398 c 0,0 -3.267853,12.00508 3.9518,17.46588 7.46979,5.65 58.780249,7.80308 71.339389,-2.47475 3.45638,-2.82855 2.21428,-15.52567 2.21428,-15.52567"
+       id="path1387"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccssccssc"
+       inkscape:export-filename="/home/shootingstar/NetBeansProjects/EscapeRoomGame/core/assets/images/maps/north_map_password_box/code3.png"
+       inkscape:export-xdpi="12.131031"
+       inkscape:export-ydpi="12.131031" />
+  </g>
+</svg>

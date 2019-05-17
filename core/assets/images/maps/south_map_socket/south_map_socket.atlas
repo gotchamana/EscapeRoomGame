@@ -1,0 +1,27 @@
+
+south_map_socket.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 2, 514
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+socket_broken
+  rotate: false
+  xy: 2, 258
+  size: 405, 254
+  orig: 405, 254
+  offset: 0, 0
+  index: -1
+socket_complete
+  rotate: false
+  xy: 2, 2
+  size: 405, 254
+  orig: 405, 254
+  offset: 0, 0
+  index: -1

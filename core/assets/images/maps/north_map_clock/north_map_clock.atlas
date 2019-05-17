@@ -1,0 +1,173 @@
+
+north_map_clock.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 2, 527
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+decimal_cycle10
+  rotate: false
+  xy: 2, 177
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+decimal_cycle2
+  rotate: false
+  xy: 644, 833
+  size: 173, 174
+  orig: 173, 174
+  offset: 0, 0
+  index: -1
+decimal_cycle3
+  rotate: false
+  xy: 644, 658
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+decimal_cycle4
+  rotate: false
+  xy: 644, 483
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+decimal_cycle5
+  rotate: false
+  xy: 2, 352
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+decimal_cycle6
+  rotate: false
+  xy: 177, 352
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+decimal_cycle7
+  rotate: false
+  xy: 352, 352
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+decimal_cycle8
+  rotate: false
+  xy: 527, 308
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+decimal_cycle9
+  rotate: false
+  xy: 702, 308
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+duodecimal_cycle1
+  rotate: false
+  xy: 177, 177
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+duodecimal_cycle10
+  rotate: false
+  xy: 819, 484
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+duodecimal_cycle2
+  rotate: false
+  xy: 352, 177
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+duodecimal_cycle3
+  rotate: false
+  xy: 527, 133
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+duodecimal_cycle4
+  rotate: false
+  xy: 702, 133
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+duodecimal_cycle5
+  rotate: false
+  xy: 2, 2
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+duodecimal_cycle6
+  rotate: false
+  xy: 177, 2
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+duodecimal_cycle7
+  rotate: false
+  xy: 352, 2
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+duodecimal_cycle8
+  rotate: false
+  xy: 819, 834
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+duodecimal_cycle9
+  rotate: false
+  xy: 819, 659
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+
+north_map_clock2.png
+size: 1024,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+decimal_cycle1
+  rotate: false
+  xy: 352, 3
+  size: 173, 172
+  orig: 173, 172
+  offset: 0, 0
+  index: -1
+duodecimal_cycle11
+  rotate: false
+  xy: 2, 2
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1
+duodecimal_cycle12
+  rotate: false
+  xy: 177, 2
+  size: 173, 173
+  orig: 173, 173
+  offset: 0, 0
+  index: -1

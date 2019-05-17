@@ -1,0 +1,27 @@
+
+north_map_diary.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 2, 484
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+diary_close
+  rotate: false
+  xy: 644, 565
+  size: 286, 399
+  orig: 286, 399
+  offset: 0, 0
+  index: -1
+diary_open
+  rotate: false
+  xy: 2, 2
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
