@@ -2,23 +2,24 @@ package escape.room.game.gameobject;
 
 import escape.room.game.event.*;
 import escape.room.game.Touchable;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class TouchableSprite extends Sprite implements Touchable {
+public class TouchableSprite extends CustomSprite implements Touchable {
 
 	protected boolean isTouchable;
 	private TouchEventHandler touchDownHandler, touchDraggedHandler, touchUpHandler;
 
-	public TouchableSprite(com.badlogic.gdx.graphics.g2d.Sprite sprite) {
+	public TouchableSprite(Sprite sprite) {
 		super(sprite);
 		isTouchable = true;
 	}
 
-	public TouchableSprite(com.badlogic.gdx.graphics.g2d.Sprite sprite, boolean isVisible) {
+	public TouchableSprite(Sprite sprite, boolean isVisible) {
 		super(sprite, isVisible);
 		isTouchable = isVisible;
 	}
 
-	public TouchableSprite(com.badlogic.gdx.graphics.g2d.Sprite sprite, boolean isVisible, boolean isTouchable) {
+	public TouchableSprite(Sprite sprite, boolean isVisible, boolean isTouchable) {
 		super(sprite, isVisible);
 		this.isTouchable = isTouchable;
 	}

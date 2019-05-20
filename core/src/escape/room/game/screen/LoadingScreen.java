@@ -71,11 +71,29 @@ public class LoadingScreen implements Screen {
 		assetManager.load("fonts/font.fnt", BitmapFont.class);
 		assetManager.load("images/uis/ui.atlas", TextureAtlas.class);
 		assetManager.load("images/icons/icon.atlas", TextureAtlas.class);
+
 		assetManager.load("images/maps/east_map/east_map.atlas", TextureAtlas.class);
 		assetManager.load("images/maps/east_map_fireplace_top/east_map_fireplace_top.atlas", TextureAtlas.class);
 		assetManager.load("images/maps/east_map_fireplace_front/east_map_fireplace_front.atlas", TextureAtlas.class);
+
 		assetManager.load("images/maps/south_map/south_map.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/south_map_aquarium/south_map_aquarium.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/south_map_upper_drawer/south_map_upper_drawer.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/south_map_lower_drawer/south_map_lower_drawer.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/south_map_socket/south_map_socket.atlas", TextureAtlas.class);
+
+		assetManager.load("images/maps/west_map/west_map.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/west_map_plant/west_map_plant.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/west_map_tv/west_map_tv.atlas", TextureAtlas.class);
 		assetManager.load("images/maps/west_map_right_drawer/west_map_right_drawer.atlas", TextureAtlas.class);
+
+		assetManager.load("images/maps/north_map/north_map.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/north_map_clock/north_map_clock.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/north_map_desk/north_map_desk.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/north_map_diary/north_map_diary.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/north_map_map/north_map_map.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/north_map_password_box/north_map_password_box.atlas", TextureAtlas.class);
+		assetManager.load("images/maps/north_map_star/north_map_star.atlas", TextureAtlas.class);
 
 		assetManager.finishLoadingAsset("fonts/font.fnt");
 	}

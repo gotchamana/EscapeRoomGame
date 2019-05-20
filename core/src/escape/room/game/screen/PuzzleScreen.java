@@ -85,7 +85,10 @@ public class PuzzleScreen implements Screen {
 		// 西邊地圖之右邊抽屜
 		TextureAtlas uiAtlas = assetManager.get("images/uis/ui.atlas");
 		TextureAtlas mapAtlas = assetManager.get("images/maps/west_map_right_drawer/west_map_right_drawer.atlas");
-		westMapRightDrawer = new PuzzleBoard();
+
+		// 背景
+		CustomSprite bg = new CustomSprite(mapAtlas.createSprite("bg"));
+		bg.flip(false, true);
 
 		// 拼圖
 		Puzzle puzzle1 = new Puzzle(mapAtlas.createSprite("puzzle1"));
@@ -105,6 +108,22 @@ public class PuzzleScreen implements Screen {
 		puzzle4.flip(false, true);
 		puzzle4.setPosition(100, 300);
 
+		Puzzle puzzle5 = new Puzzle(mapAtlas.createSprite("puzzle5"));
+		puzzle5.flip(false, true);
+		puzzle5.setPosition(100, 300);
+
+		Puzzle puzzle6 = new Puzzle(mapAtlas.createSprite("puzzle6"));
+		puzzle6.flip(false, true);
+		puzzle6.setPosition(100, 300);
+
+		Puzzle puzzle7 = new Puzzle(mapAtlas.createSprite("puzzle7"));
+		puzzle7.flip(false, true);
+		puzzle7.setPosition(100, 300);
+
+		Puzzle puzzle8 = new Puzzle(mapAtlas.createSprite("puzzle8"));
+		puzzle8.flip(false, true);
+		puzzle8.setPosition(100, 300);
+
 		// 箭頭
 		TouchableSprite arrowDown = new Arrow(Arrow.ArrowType.DOWN, uiAtlas);
 		arrowDown.flip(false, true);
@@ -113,6 +132,7 @@ public class PuzzleScreen implements Screen {
 			return true;
 		});
 
-		westMapRightDrawer.addDrawableObjects(puzzle1, puzzle2, puzzle3, puzzle4, arrowDown);
+		westMapRightDrawer = new PuzzleBoard();
+		westMapRightDrawer.addDrawableObjects(bg, puzzle1, puzzle2, puzzle3, puzzle4, puzzle5, puzzle6, puzzle7, puzzle8, arrowDown);
 	}
 }

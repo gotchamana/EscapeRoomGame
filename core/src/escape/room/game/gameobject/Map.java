@@ -26,7 +26,9 @@ public class Map {
 	public void addDrawableObjects(Drawable... drawableObjects) {
 		this.drawableObjects.addAll(drawableObjects);
 
-		Arrays.stream(drawableObjects).filter(s -> s instanceof TouchableSprite).forEach(s -> touchableSprites.add((TouchableSprite)s));
+		Arrays.stream(drawableObjects)
+			.filter(s -> s instanceof TouchableSprite)
+			.forEach(s -> touchableSprites.add((TouchableSprite)s));
 	}
 
 	public void removeDrawableObject(Drawable drawableObject) {

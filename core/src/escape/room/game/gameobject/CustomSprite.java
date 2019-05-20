@@ -1,18 +1,18 @@
 package escape.room.game.gameobject;
 
 import escape.room.game.Drawable;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.*;
 
-public class Sprite extends com.badlogic.gdx.graphics.g2d.Sprite implements Drawable {
+public class CustomSprite extends Sprite implements Drawable {
 
 	protected boolean isVisible;
 
-	public Sprite(com.badlogic.gdx.graphics.g2d.Sprite sprite) {
+	public CustomSprite(Sprite sprite) {
 		super(sprite);
 		isVisible = true;
 	}
 
-	public Sprite(com.badlogic.gdx.graphics.g2d.Sprite sprite, boolean isVisible) {
+	public CustomSprite(Sprite sprite, boolean isVisible) {
 		super(sprite);
 		this.isVisible = isVisible;
 	}

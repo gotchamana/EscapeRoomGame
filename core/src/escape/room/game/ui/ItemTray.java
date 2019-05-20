@@ -101,6 +101,15 @@ public class ItemTray {
 		return rlt.toArray(Cell.class);
 	}
 
+	public Cell getSelectedCell() {
+		for (Cell cell : getCells()) {
+			if (cell.isSelected()) {
+				return cell;
+			}
+		}
+		return null;
+	}
+
 	public TouchableSprite[] getTriangles() {
 		return new TouchableSprite[]{leftTriangle, rightTriangle};
 	}
