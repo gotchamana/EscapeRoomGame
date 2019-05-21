@@ -15,10 +15,10 @@ public class ERScreen implements Screen {
 	private EscapeRoomGame game;
 	private AssetManager assetManager;
 	private OrthographicCamera camera;
-
 	private SpriteBatch batch;
-
 	private ItemTray itemTray;
+	private GameData gameData;
+
 	private Map currentMap, eastMap, eastMapFireplaceTop, eastMapFireplaceFront;
 	private Map southMap, southMapAquarium,southMapLowerDrawer, southMapUpperDrawer, southMapSocket;
 	private Map westMap, westMapPlant, westMapTV;
@@ -33,10 +33,10 @@ public class ERScreen implements Screen {
 		camera.setToOrtho(true, 700, 480);
 
 		Item.setItemIconAtlas(assetManager.get("images/icons/icon.atlas"));
-
 		ItemTray.setUiAtlas(assetManager.get("images/uis/ui.atlas"));
 		itemTray = ItemTray.getItemTray();
 
+		gameData = GameData.getGameData();
 		initMap();
 
 		batch = new SpriteBatch();
@@ -109,6 +109,7 @@ public class ERScreen implements Screen {
 			if (cell != null && cell.getItem() == Item.EAST_SLATE) {
 				cell.removeItem();
 				eastSlate.setVisible(true);
+				gameData.setIsEastHoleEmpty(false);
 				return true;
 			}
 			return false;
@@ -118,7 +119,9 @@ public class ERScreen implements Screen {
 		TouchableSprite wood = new TouchableSprite(createSprite(mapAtlas, "wood"));
 		wood.setPosition(305, 405);
 		wood.setOnTouchDown(e -> {
-			currentMap = eastMapFireplaceFront;
+			if (!gameData.isFireBurning()) {
+				currentMap = eastMapFireplaceFront;
+			}
 			return true;
 		});
 
@@ -302,6 +305,7 @@ public class ERScreen implements Screen {
 			if (cell != null && cell.getItem() == Item.SOUTH_SLATE) {
 				cell.removeItem();
 				southSlate.setVisible(true);
+				gameData.setIsSouthHoleEmpty(false);
 				return true;
 			}
 			return false;
@@ -327,7 +331,15 @@ public class ERScreen implements Screen {
 		TouchableSprite upperDrawer = new TouchableSprite(createSprite(mapAtlas, "upper_drawer"));
 		upperDrawer.setPosition(220, 333);
 		upperDrawer.setOnTouchDown(e -> {
-			currentMap = southMapUpperDrawer;
+			if (gameData.isDrawerLock()) {
+				Cell cell = itemTray.getSelectedCell(); 
+				if (cell != null && cell.getItem() == Item.KEY) { 
+					cell.removeItem();
+					gameData.setIsDrawerLock(false);
+				}
+			} else {
+				currentMap = southMapUpperDrawer;
+			}
 			return true;
 		});
 
@@ -369,6 +381,11 @@ public class ERScreen implements Screen {
 		TouchableSprite turtleShell = new TouchableSprite(createSprite(mapAtlas, "shell"));
 		turtleShell.setTouchable(false);
 		turtleShell.setPosition(112, 136);
+		turtleShell.setOnTouchDown(e -> {
+			southMapAquarium.removeDrawableObject(turtleShell);
+			itemTray.addItem(Item.SHELL);
+			return true;
+		});
 
 		// 水
 		CustomSprite water = createSprite(mapAtlas, "water");
@@ -426,13 +443,38 @@ public class ERScreen implements Screen {
 		// 背景
 		bg = createSprite(mapAtlas, "bg");
 
-		// 斷掉的電線
-		TouchableSprite brokenWire = new TouchableSprite(createSprite(mapAtlas, "socket_broken"));
-		brokenWire.setPosition(114, 144);
-
 		// 完好的電線
 		CustomSprite completeWire = createSprite(mapAtlas, "socket_complete", false);
 		completeWire.setPosition(114, 144);
+
+		// 斷掉的電線
+		TouchableSprite brokenWire = new TouchableSprite(createSprite(mapAtlas, "socket_broken"));
+		brokenWire.setPosition(114, 144);
+		brokenWire.setOnTouchDown(e -> {
+			Cell cell = itemTray.getSelectedCell();
+
+			if (cell != null && cell.getItem() == Item.TAPE) {
+				cell.removeItem();
+				
+				// 把電線接起來
+				completeWire.setVisible(true);
+				southMapSocket.removeDrawableObject(brokenWire);
+
+				// 讓燈亮起來
+				lampLight.setVisible(true);
+				southMap.removeDrawableObject(lampDark);
+
+				// 烏龜出來曬燈光
+				turtleShell.setTouchable(true);
+				southMapAquarium.removeDrawableObject(turtleBody);
+				southMapAquarium.addDrawableObject(turtleBody);
+				turtleBody.rotate(90);
+				turtleBody.setPosition(325, 80);
+
+				return true;
+			}
+			return false;
+		});
 
 		// 箭頭
 		arrowDown = createArrow(Arrow.ArrowType.DOWN, uiAtlas);
@@ -463,6 +505,7 @@ public class ERScreen implements Screen {
 			if (cell != null && cell.getItem() == Item.WEST_SLATE) {
 				cell.removeItem();
 				westSlate.setVisible(true);
+				gameData.setIsWestHoleEmpty(false);
 				return true;
 			}
 			return false;
@@ -590,10 +633,6 @@ public class ERScreen implements Screen {
 		westMapPlant = new Map();
 		westMapPlant.addDrawableObjects(bg, touchableEastSlate, arrowDown);
 
-		// 西邊地圖之右邊抽屜
-		mapAtlas = assetManager.get("images/maps/west_map_right_drawer/west_map_right_drawer.atlas");
-
-
 		// 西邊地圖之電視
 		mapAtlas = assetManager.get("images/maps/west_map_tv/west_map_tv.atlas");
 
@@ -613,10 +652,14 @@ public class ERScreen implements Screen {
 		TouchableSprite completeTV = new TouchableSprite(createSprite(mapAtlas, "tv_complete"));
 		completeTV.setPosition(97, 117);
 		completeTV.setOnTouchDown(e -> {
-			westMapTV.removeDrawableObject(completeTV);
+			Cell cell = itemTray.getSelectedCell();
 
-			touchableSouthSlate.setVisible(true);
-			touchableSouthSlate.setTouchable(true);
+			if (cell != null && cell.getItem() == Item.HAMMER) {
+				westMapTV.removeDrawableObject(completeTV);
+
+				touchableSouthSlate.setVisible(true);
+				touchableSouthSlate.setTouchable(true);
+			}
 			return true;
 		});
 
@@ -635,7 +678,7 @@ public class ERScreen implements Screen {
 
 		// 北邊地圖
 		mapAtlas = assetManager.get("images/maps/north_map/north_map.atlas");
-		
+
 		// 背景
 		bg = createSprite(mapAtlas, "bg");
 
@@ -676,6 +719,7 @@ public class ERScreen implements Screen {
 			if (cell != null && cell.getItem() == Item.NORTH_SLATE) {
 				cell.removeItem();
 				northSlate.setVisible(true);
+				gameData.setIsNorthHoleEmpty(false);
 				return true;
 			}
 			return false;
@@ -729,14 +773,19 @@ public class ERScreen implements Screen {
 		// 天干
 		TouchableSprite[] decimalCycles = new TouchableSprite[10];
 		for (int i = 0; i < decimalCycles.length; i++) {
-			decimalCycles[i] = new TouchableSprite(createSprite(mapAtlas, "decimal_cycle" + (i + 1)));
+			decimalCycles[i] = new TouchableSprite(createSprite(mapAtlas, "decimal_cycle" + (i + 1)), false);
 			decimalCycles[i].setPosition(94, 183);
+		}
+
+		for (int i = 0; i < decimalCycles.length; i++) {
+			decimalCycles[i].setOnTouchDown(e -> {
+			});
 		}
 
 		// 地支
 		TouchableSprite[] duodecimalCycles = new TouchableSprite[12];
 		for (int i = 0; i < duodecimalCycles.length; i++) {
-			duodecimalCycles[i] = new TouchableSprite(createSprite(mapAtlas, "duodecimal_cycle" + (i + 1)));
+			duodecimalCycles[i] = new TouchableSprite(createSprite(mapAtlas, "duodecimal_cycle" + (i + 1)), false);
 			duodecimalCycles[i].setPosition(382, 183);
 		}
 
@@ -947,13 +996,6 @@ public class ERScreen implements Screen {
 		// 背景
 		bg = createSprite(mapAtlas, "bg");
 
-		// 星星
-		TouchableSprite completeStar = new TouchableSprite(createSprite(mapAtlas, "star_complete"));
-		completeStar.setPosition(200, 127);
-
-		CustomSprite brokenStar = createSprite(mapAtlas, "star_broken", false);
-		brokenStar.setPosition(88, 124);
-
 		// 石板
 		TouchableSprite touchableNorthSlate = new TouchableSprite(createSprite(mapAtlas, "slate"), false);
 		touchableNorthSlate.setPosition(260, 172);
@@ -961,6 +1003,29 @@ public class ERScreen implements Screen {
 			northMapStar.removeDrawableObject(touchableNorthSlate);
 			itemTray.addItem(Item.NORTH_SLATE);
 			return true;
+		});
+
+		// 星星
+		CustomSprite brokenStar = createSprite(mapAtlas, "star_broken", false);
+		brokenStar.setPosition(88, 124);
+
+		TouchableSprite completeStar = new TouchableSprite(createSprite(mapAtlas, "star_complete"), false);
+		completeStar.setPosition(200, 127);
+		completeStar.setOnTouchDown(e -> {
+			Cell cell = itemTray.getSelectedCell();
+
+			if (cell != null && cell.getItem() == Item.HAMMER) {
+				// 星星破掉
+				brokenStar.setVisible(true);
+
+				// 石板顯現
+				touchableNorthSlate.setVisible(true);
+				touchableNorthSlate.setTouchable(true);
+
+				// 移除完整的星星
+				northMapStar.removeDrawableObject(completeStar);
+			}
+			return false;
 		});
 
 		// 箭頭
