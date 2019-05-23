@@ -2,8 +2,8 @@ package escape.room.game.ui;
 
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
-import java.util.Objects;
 import escape.room.game.gameobject.TouchableSprite;
+import java.util.Objects;
 
 public class ItemTray {
 	

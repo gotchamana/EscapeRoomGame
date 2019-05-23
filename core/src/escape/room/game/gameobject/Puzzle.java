@@ -1,7 +1,7 @@
 package escape.room.game.gameobject;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Puzzle extends TouchableSprite {
 	
@@ -33,20 +33,18 @@ public class Puzzle extends TouchableSprite {
 			touchY = e.getScreenY();
 			return true;
 		});
+	}
 
-		setOnTouchUp(e -> {
-			isTouch = false;
-			if (targetRegion.contains(getX(), getY())) {
-				isCorrectPosition = true;
-				setTouchable(false);
-				setPosition(targetRegion.x + targetRegion.width / 2, targetRegion.y + targetRegion.height / 2);
-			}
-			return true;
-		});
+	public void setIsTouch(boolean isTouch) {
+		this.isTouch = isTouch;
 	}
 
 	public boolean isTouch() {
 		return isTouch;
+	}
+
+	public void setIsCorrectPosition(boolean isCorrectPosition) {
+		this.isCorrectPosition = isCorrectPosition;
 	}
 
 	public boolean isCorrectPosition() {

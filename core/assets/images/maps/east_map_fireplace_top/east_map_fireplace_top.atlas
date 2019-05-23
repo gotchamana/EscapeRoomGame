@@ -18,6 +18,13 @@ lighter
   orig: 57, 88
   offset: 0, 0
   index: -1
+tortoiseshell
+  rotate: false
+  xy: 426, 98
+  size: 207, 292
+  orig: 207, 292
+  offset: 0, 0
+  index: -1
 tortoiseshell_after_process
   rotate: false
   xy: 2, 92
@@ -25,11 +32,18 @@ tortoiseshell_after_process
   orig: 210, 298
   offset: 0, 0
   index: -1
-tortoiseshell_outline
+tortoiseshell_after_use
   rotate: false
   xy: 644, 574
   size: 210, 298
   orig: 210, 298
+  offset: 0, 0
+  index: -1
+tortoiseshell_outline
+  rotate: false
+  xy: 644, 280
+  size: 204, 292
+  orig: 204, 292
   offset: 0, 0
   index: -1
 tortoiseshell_with_code

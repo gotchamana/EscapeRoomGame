@@ -1,9 +1,9 @@
 package escape.room.game.gameobject;
 
-import com.badlogic.gdx.utils.Array;
-import java.util.Arrays;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.utils.Array;
 import escape.room.game.Drawable;
+import java.util.Arrays;
 
 public class Map {
 	
@@ -36,6 +36,16 @@ public class Map {
 
 		if (drawableObject instanceof TouchableSprite) {
 			touchableSprites.removeValue((TouchableSprite)drawableObject, true);
+		}
+	}
+
+	public void removeDrawableObjects(Drawable... drawableObjects) {
+		for (Drawable d : drawableObjects) {
+			this.drawableObjects.removeValue(d, true);
+
+			if (d instanceof TouchableSprite) {
+				touchableSprites.removeValue((TouchableSprite)d, true);
+			}
 		}
 	}
 

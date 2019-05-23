@@ -3,12 +3,14 @@ package escape.room.game.screen;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.utils.Array;
 import escape.room.game.*;
 import escape.room.game.event.*;
 import escape.room.game.gameobject.*;
 import escape.room.game.ui.*;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.graphics.g2d.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 public class ERScreen implements Screen {
 
@@ -23,6 +25,7 @@ public class ERScreen implements Screen {
 	private Map southMap, southMapAquarium,southMapLowerDrawer, southMapUpperDrawer, southMapSocket;
 	private Map westMap, westMapPlant, westMapTV;
 	private Map northMap, northMapDesk, northMapMap, northMapStar, northMapClock, northMapDiary, northMapPasswordBox;
+	private TouchableSprite completeStar;
 
 	public ERScreen(EscapeRoomGame game) {
 		this.game = game;
@@ -101,6 +104,7 @@ public class ERScreen implements Screen {
 		eastSlate.setPosition(299, 142);
 
 		// 空洞
+		CustomAnimation<Sprite> fireAnim = new CustomAnimation<>(0.10f, mapAtlas.createSprites("fire"), CustomAnimation.PlayMode.LOOP);
 		TouchableSprite hole = new TouchableSprite(createSprite(mapAtlas, "hole"));
 		hole.setPosition(297, 141);
 		hole.setOnTouchDown(e -> {
@@ -110,6 +114,10 @@ public class ERScreen implements Screen {
 				cell.removeItem();
 				eastSlate.setVisible(true);
 				gameData.setIsEastHoleEmpty(false);
+				if (checkFireBurnOutEvent()) {
+					eastMap.removeDrawableObject(fireAnim);
+					gameData.setIsFireBurning(false);
+				}
 				return true;
 			}
 			return false;
@@ -203,7 +211,6 @@ public class ERScreen implements Screen {
 		});
 
 		// 火焰
-		CustomAnimation<Sprite> fireAnim = new CustomAnimation<>(0.10f, mapAtlas.createSprites("fire"), CustomAnimation.PlayMode.LOOP);
 		for (com.badlogic.gdx.graphics.g2d.Sprite fire: fireAnim.getKeyFrames()) {
 			fire.setScale(0.8f);
 			fire.setPosition(290, 360);
@@ -219,19 +226,67 @@ public class ERScreen implements Screen {
 		// 背景
 		bg = createSprite(mapAtlas, "bg");
 
-		// 加工後龜甲
+		// 原始龜甲
+		TouchableSprite tortoiseshellOutline = new TouchableSprite(createSprite(mapAtlas, "tortoiseshell_outline"));
 		TouchableSprite tortoiseshellAfterProcess = new TouchableSprite(createSprite(mapAtlas, "tortoiseshell_after_process"), false);
-		tortoiseshellAfterProcess.setPosition(350, 30);
-		tortoiseshellAfterProcess.setOnTouchDown(e -> {
+		TouchableSprite tortoiseshellAfterUse = new TouchableSprite(createSprite(mapAtlas, "tortoiseshell_after_use"), false);
+		CustomSprite tortoiseshellWithCode = createSprite(mapAtlas, "tortoiseshell_with_code", false);
+		TouchableSprite tortoiseshell = new TouchableSprite(createSprite(mapAtlas, "tortoiseshell"), false);
+
+		tortoiseshell.setPosition(295, 35);
+		tortoiseshell.setOnTouchDown(e -> {
+			Cell cell = itemTray.getSelectedCell();
+
+			if (cell != null && cell.getItem() == Item.SAW) {
+				cell.removeItem();
+				eastMapFireplaceTop.removeDrawableObject(tortoiseshell);
+				eastMapFireplaceTop.removeDrawableObject(tortoiseshellOutline);
+				tortoiseshellAfterProcess.setVisible(true);
+				tortoiseshellAfterProcess.setTouchable(true);
+			}
 			return true;
 		});
 
+		// 加工後龜甲
+		tortoiseshellAfterProcess.setPosition(292, 32);
+		tortoiseshellAfterProcess.setOnTouchDown(e -> {
+			Cell cell = itemTray.getSelectedCell();
+
+			if (cell != null && cell.getItem() == Item.KNIFE) {
+				cell.removeItem();
+				eastMapFireplaceTop.removeDrawableObject(tortoiseshellAfterProcess);
+				tortoiseshellAfterUse.setVisible(true);
+				tortoiseshellAfterUse.setTouchable(true);
+			}
+			return true;
+		});
+
+		// 刻字後龜甲
+		tortoiseshellAfterUse.setPosition(292, 32);
+		tortoiseshellAfterUse.setOnTouchDown(e -> {
+			Cell cell = itemTray.getSelectedCell();
+
+			if (cell != null && cell.getItem() == Item.LIGHTER) {
+				cell.removeItem();
+				eastMapFireplaceTop.removeDrawableObject(tortoiseshellAfterUse);
+				tortoiseshellWithCode.setVisible(true);
+			}
+			return true;
+		});
+
+		// 燒灼後龜甲
+		tortoiseshellWithCode.setPosition(292, 32);
+		
 		// 龜甲輪廓
-		TouchableSprite tortoiseshellOutline = new TouchableSprite(createSprite(mapAtlas, "tortoiseshell_outline"));
-		tortoiseshellOutline.setPosition(350, 30);
+		tortoiseshellOutline.setPosition(295, 35);
 		tortoiseshellOutline.setOnTouchDown(e -> {
-			tortoiseshellAfterProcess.setVisible(true);
-			tortoiseshellAfterProcess.setTouchable(true);
+			Cell cell = itemTray.getSelectedCell();
+
+			if (cell != null && cell.getItem() == Item.SHELL) {
+				cell.removeItem();
+				tortoiseshell.setVisible(true);
+				tortoiseshell.setTouchable(true);
+			}
 			return true;
 		});
 
@@ -251,7 +306,7 @@ public class ERScreen implements Screen {
 			return true;
 		});
 
-		eastMapFireplaceTop.addDrawableObjects(bg, lighter, tortoiseshellOutline, tortoiseshellAfterProcess, arrowDown);
+		eastMapFireplaceTop.addDrawableObjects(bg, lighter, tortoiseshellOutline, tortoiseshell, tortoiseshellAfterProcess, tortoiseshellAfterUse, tortoiseshellWithCode, arrowDown);
 
 		// 東邊地圖之壁爐前方
 		mapAtlas = assetManager.get("images/maps/east_map_fireplace_front/east_map_fireplace_front.atlas");
@@ -306,6 +361,10 @@ public class ERScreen implements Screen {
 				cell.removeItem();
 				southSlate.setVisible(true);
 				gameData.setIsSouthHoleEmpty(false);
+				if (checkFireBurnOutEvent()) {
+					eastMap.removeDrawableObject(fireAnim);
+					gameData.setIsFireBurning(false);
+				}
 				return true;
 			}
 			return false;
@@ -506,6 +565,10 @@ public class ERScreen implements Screen {
 				cell.removeItem();
 				westSlate.setVisible(true);
 				gameData.setIsWestHoleEmpty(false);
+				if (checkFireBurnOutEvent()) {
+					eastMap.removeDrawableObject(fireAnim);
+					gameData.setIsFireBurning(false);
+				}
 				return true;
 			}
 			return false;
@@ -710,6 +773,11 @@ public class ERScreen implements Screen {
 		CustomSprite northSlate = createSprite(mapAtlas, "slate", false);
 		northSlate.setPosition(299, 142);
 
+		/* Consumer<Boolean> fireBurnFun = e -> {
+			if (e) {
+			}
+		}; */
+
 		// 空洞
 		hole = new TouchableSprite(createSprite(mapAtlas, "hole"));
 		hole.setPosition(297, 141);
@@ -720,6 +788,10 @@ public class ERScreen implements Screen {
 				cell.removeItem();
 				northSlate.setVisible(true);
 				gameData.setIsNorthHoleEmpty(false);
+				if (checkFireBurnOutEvent()) {
+					eastMap.removeDrawableObject(fireAnim);
+					gameData.setIsFireBurning(false);
+				}
 				return true;
 			}
 			return false;
@@ -734,7 +806,7 @@ public class ERScreen implements Screen {
 		});
 
 		// 星星
-		TouchableSprite star = new TouchableSprite(createSprite(mapAtlas, "star"));
+		TouchableSprite star = new TouchableSprite(createSprite(mapAtlas, "star"), false);
 		star.setPosition(466, 431);
 		star.setOnTouchDown(e -> {
 			currentMap = northMapStar;
@@ -777,10 +849,44 @@ public class ERScreen implements Screen {
 			decimalCycles[i].setPosition(94, 183);
 		}
 
+		AtomicInteger decimalIndex = new AtomicInteger(0);
+		Consumer<Boolean> windowBrokenFun = e -> {
+			if (e) {
+				northMap.removeDrawableObject(completeWindow);
+				brokenWindow.setVisible(true);
+				star.setVisible(true);
+				star.setTouchable(true);
+				completeStar.setVisible(true);
+				completeStar.setTouchable(true);
+			}
+		};
+		gameData.setWindowBrokenFun(windowBrokenFun);
+
 		for (int i = 0; i < decimalCycles.length; i++) {
 			decimalCycles[i].setOnTouchDown(e -> {
+				int currentIndex = decimalIndex.get();
+				int nextIndex = currentIndex + 1; 
+				nextIndex = (nextIndex == decimalCycles.length) ? 0 : nextIndex;
+
+				gameData.setDecimalCycle(DecimalCycle.valueOf("DECIMAL_CYCLE" + (nextIndex + 1)));
+				windowBrokenFun.accept(checkWindowBrokenEvent());
+				if (checkFireBurnOutEvent()) {
+					eastMap.removeDrawableObject(fireAnim);
+					gameData.setIsFireBurning(false);
+				}
+
+				decimalCycles[currentIndex].setVisible(false);
+				decimalCycles[currentIndex].setTouchable(false);
+
+				decimalCycles[nextIndex].setVisible(true);
+				decimalCycles[nextIndex].setTouchable(true);
+
+				decimalIndex.set(decimalIndex.incrementAndGet() % 10);
+				return true;
 			});
 		}
+		decimalCycles[0].setVisible(true);
+		decimalCycles[0].setTouchable(true);
 
 		// 地支
 		TouchableSprite[] duodecimalCycles = new TouchableSprite[12];
@@ -788,6 +894,33 @@ public class ERScreen implements Screen {
 			duodecimalCycles[i] = new TouchableSprite(createSprite(mapAtlas, "duodecimal_cycle" + (i + 1)), false);
 			duodecimalCycles[i].setPosition(382, 183);
 		}
+
+		AtomicInteger duodecimalIndex = new AtomicInteger(0);
+		for (int i = 0; i < duodecimalCycles.length; i++) {
+			duodecimalCycles[i].setOnTouchDown(e -> {
+				int currentIndex = duodecimalIndex.get();
+				int nextIndex = currentIndex + 1; 
+				nextIndex = (nextIndex == duodecimalCycles.length) ? 0 : nextIndex;
+
+				gameData.setDuodecimalCycle(DuodecimalCycle.valueOf("DUODECIMAL_CYCLE" + (nextIndex + 1)));
+				windowBrokenFun.accept(checkWindowBrokenEvent());
+				if (checkFireBurnOutEvent()) {
+					eastMap.removeDrawableObject(fireAnim);
+					gameData.setIsFireBurning(false);
+				}
+
+				duodecimalCycles[currentIndex].setVisible(false);
+				duodecimalCycles[currentIndex].setTouchable(false);
+
+				duodecimalCycles[nextIndex].setVisible(true);
+				duodecimalCycles[nextIndex].setTouchable(true);
+
+				duodecimalIndex.set(duodecimalIndex.incrementAndGet() % 12);
+				return true;
+			});
+		}
+		duodecimalCycles[0].setVisible(true);
+		duodecimalCycles[0].setTouchable(true);
 
 		// 箭頭
 		arrowDown = createArrow(Arrow.ArrowType.DOWN, uiAtlas);
@@ -953,28 +1086,156 @@ public class ERScreen implements Screen {
 
 		// 密碼
 		TouchableSprite[] codes1 = new TouchableSprite[4];
+		TouchableSprite[] codes2 = new TouchableSprite[4];
+		TouchableSprite[] codes3 = new TouchableSprite[4];
+		TouchableSprite[] codes4 = new TouchableSprite[4];
 		for (int i = 0; i < codes1.length; i++) {
-			codes1[i] = new TouchableSprite(createSprite(mapAtlas, "code" + (i + 1)));
+			codes1[i] = new TouchableSprite(createSprite(mapAtlas, "code" + (i + 1)), false);
 			codes1[i].setPosition(192, 124);
 		}
 
-		TouchableSprite[] codes2 = new TouchableSprite[4];
+		AtomicInteger code1Index = new AtomicInteger(0);
+		for (int i = 0; i < codes1.length; i++) {
+			codes1[i].setOnTouchDown(e -> {
+				int currentIndex = code1Index.get();
+				int nextIndex = currentIndex + 1; 
+				nextIndex = (nextIndex == codes1.length) ? 0 : nextIndex;
+
+				gameData.setCode1(Code.valueOf("CODE" + (nextIndex + 1)));
+				if (checkPasswordCorrect()) {
+					northMapPasswordBox.removeDrawableObject(closePasswordBox);
+					northMapPasswordBox.removeDrawableObjects(codes1);
+					northMapPasswordBox.removeDrawableObjects(codes2);
+					northMapPasswordBox.removeDrawableObjects(codes3);
+					northMapPasswordBox.removeDrawableObjects(codes4);
+					touchableWestSlate.setVisible(true);
+					touchableWestSlate.setTouchable(true);
+					openPasswordBox.setVisible(true);
+				}
+
+				codes1[currentIndex].setVisible(false);
+				codes1[currentIndex].setTouchable(false);
+
+				codes1[nextIndex].setVisible(true);
+				codes1[nextIndex].setTouchable(true);
+
+				code1Index.set(code1Index.incrementAndGet() % 4);
+				return true;
+			});
+		}
+		codes1[0].setVisible(true);
+		codes1[0].setTouchable(true);
+
 		for (int i = 0; i < codes2.length; i++) {
-			codes2[i] = new TouchableSprite(createSprite(mapAtlas, "code" + (i + 1)));
+			codes2[i] = new TouchableSprite(createSprite(mapAtlas, "code" + (i + 1)), false);
 			codes2[i].setPosition(340, 124);
 		}
 
-		TouchableSprite[] codes3 = new TouchableSprite[4];
+		AtomicInteger code2Index = new AtomicInteger(0);
+		for (int i = 0; i < codes2.length; i++) {
+			codes2[i].setOnTouchDown(e -> {
+				int currentIndex = code2Index.get();
+				int nextIndex = currentIndex + 1; 
+				nextIndex = (nextIndex == codes2.length) ? 0 : nextIndex;
+
+				gameData.setCode2(Code.valueOf("CODE" + (nextIndex + 1)));
+				if (checkPasswordCorrect()) {
+					northMapPasswordBox.removeDrawableObject(closePasswordBox);
+					northMapPasswordBox.removeDrawableObjects(codes1);
+					northMapPasswordBox.removeDrawableObjects(codes2);
+					northMapPasswordBox.removeDrawableObjects(codes3);
+					northMapPasswordBox.removeDrawableObjects(codes4);
+					touchableWestSlate.setVisible(true);
+					touchableWestSlate.setTouchable(true);
+					openPasswordBox.setVisible(true);
+				}
+
+				codes2[currentIndex].setVisible(false);
+				codes2[currentIndex].setTouchable(false);
+
+				codes2[nextIndex].setVisible(true);
+				codes2[nextIndex].setTouchable(true);
+
+				code2Index.set(code2Index.incrementAndGet() % 4);
+				return true;
+			});
+		}
+		codes2[0].setVisible(true);
+		codes2[0].setTouchable(true);
+
 		for (int i = 0; i < codes3.length; i++) {
-			codes3[i] = new TouchableSprite(createSprite(mapAtlas, "code" + (i + 1)));
-			codes3[i].setPosition(342, 266);
+			codes3[i] = new TouchableSprite(createSprite(mapAtlas, "code" + (i + 1)), false);
+			codes3[i].setPosition(191, 266);
 		}
 
-		TouchableSprite[] codes4 = new TouchableSprite[4];
-		for (int i = 0; i < codes4.length; i++) {
-			codes4[i] = new TouchableSprite(createSprite(mapAtlas, "code" + (i + 1)));
-			codes4[i].setPosition(191, 266);
+		AtomicInteger code3Index = new AtomicInteger(0);
+		for (int i = 0; i < codes3.length; i++) {
+			codes3[i].setOnTouchDown(e -> {
+				int currentIndex = code3Index.get();
+				int nextIndex = currentIndex + 1; 
+				nextIndex = (nextIndex == codes3.length) ? 0 : nextIndex;
+
+				gameData.setCode3(Code.valueOf("CODE" + (nextIndex + 1)));
+				if (checkPasswordCorrect()) {
+					northMapPasswordBox.removeDrawableObject(closePasswordBox);
+					northMapPasswordBox.removeDrawableObjects(codes1);
+					northMapPasswordBox.removeDrawableObjects(codes2);
+					northMapPasswordBox.removeDrawableObjects(codes3);
+					northMapPasswordBox.removeDrawableObjects(codes4);
+					touchableWestSlate.setVisible(true);
+					touchableWestSlate.setTouchable(true);
+					openPasswordBox.setVisible(true);
+				}
+
+				codes3[currentIndex].setVisible(false);
+				codes3[currentIndex].setTouchable(false);
+
+				codes3[nextIndex].setVisible(true);
+				codes3[nextIndex].setTouchable(true);
+
+				code3Index.set(code3Index.incrementAndGet() % 4);
+				return true;
+			});
 		}
+		codes3[0].setVisible(true);
+		codes3[0].setTouchable(true);
+
+		for (int i = 0; i < codes4.length; i++) {
+			codes4[i] = new TouchableSprite(createSprite(mapAtlas, "code" + (i + 1)), false);
+			codes4[i].setPosition(342, 266);
+		}
+
+		AtomicInteger code4Index = new AtomicInteger(0);
+		for (int i = 0; i < codes4.length; i++) {
+			codes4[i].setOnTouchDown(e -> {
+				int currentIndex = code4Index.get();
+				int nextIndex = currentIndex + 1; 
+				nextIndex = (nextIndex == codes4.length) ? 0 : nextIndex;
+
+				gameData.setCode4(Code.valueOf("CODE" + (nextIndex + 1)));
+				if (checkPasswordCorrect()) {
+					northMapPasswordBox.removeDrawableObject(closePasswordBox);
+					northMapPasswordBox.removeDrawableObjects(codes1);
+					northMapPasswordBox.removeDrawableObjects(codes2);
+					northMapPasswordBox.removeDrawableObjects(codes3);
+					northMapPasswordBox.removeDrawableObjects(codes4);
+					touchableWestSlate.setVisible(true);
+					touchableWestSlate.setTouchable(true);
+					openPasswordBox.setVisible(true);
+				}
+
+				codes4[currentIndex].setVisible(false);
+				codes4[currentIndex].setTouchable(false);
+
+				codes4[nextIndex].setVisible(true);
+				codes4[nextIndex].setTouchable(true);
+
+				code4Index.set(code4Index.incrementAndGet() % 4);
+				return true;
+			});
+		}
+		codes4[0].setVisible(true);
+		codes4[0].setTouchable(true);
 
 		// 箭頭
 		arrowDown = createArrow(Arrow.ArrowType.DOWN, uiAtlas);
@@ -1009,7 +1270,7 @@ public class ERScreen implements Screen {
 		CustomSprite brokenStar = createSprite(mapAtlas, "star_broken", false);
 		brokenStar.setPosition(88, 124);
 
-		TouchableSprite completeStar = new TouchableSprite(createSprite(mapAtlas, "star_complete"), false);
+		completeStar = new TouchableSprite(createSprite(mapAtlas, "star_complete"), false);
 		completeStar.setPosition(200, 127);
 		completeStar.setOnTouchDown(e -> {
 			Cell cell = itemTray.getSelectedCell();
@@ -1060,5 +1321,17 @@ public class ERScreen implements Screen {
 		sprite.setVisible(isVisible);
 
 		return sprite;
+	}
+
+	private boolean checkWindowBrokenEvent() {
+		return gameData.getDecimalCycle() == DecimalCycle.DECIMAL_CYCLE7 && gameData.getDuodecimalCycle() == DuodecimalCycle.DUODECIMAL_CYCLE9 && gameData.isPuzzleFinished();
+	}
+
+	private boolean checkFireBurnOutEvent() {
+		return !(gameData.isEastHoleEmpty() || gameData.isSouthHoleEmpty() || gameData.isWestHoleEmpty() || gameData.isNorthHoleEmpty()) && (gameData.getDecimalCycle() == DecimalCycle.DECIMAL_CYCLE3 && gameData.getDuodecimalCycle() == DuodecimalCycle.DUODECIMAL_CYCLE9);
+	}
+
+	private boolean checkPasswordCorrect() {
+		return gameData.getCode1() == Code.CODE1 && gameData.getCode2() == Code.CODE2 && gameData.getCode3() == Code.CODE3 && gameData.getCode4() == Code.CODE4;
 	}
 }

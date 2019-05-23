@@ -1,8 +1,8 @@
 package escape.room.game.event;
 
 import com.badlogic.gdx.*;
-import escape.room.game.screen.ERScreen;
 import escape.room.game.gameobject.TouchableSprite;
+import escape.room.game.screen.ERScreen;
 
 public class ERScreenInputHandler extends InputAdapter {
 	

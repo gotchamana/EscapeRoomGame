@@ -1,8 +1,8 @@
 package escape.room.game.gameobject;
 
-import escape.room.game.event.*;
-import escape.room.game.Touchable;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import escape.room.game.Touchable;
+import escape.room.game.event.*;
 
 public class TouchableSprite extends CustomSprite implements Touchable {
 

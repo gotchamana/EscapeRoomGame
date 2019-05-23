@@ -1,8 +1,8 @@
 package escape.room.game.gameobject;
 
-import escape.room.game.Drawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.utils.Array;
+import escape.room.game.Drawable;
 
 public class CustomAnimation<T extends Sprite> extends Animation<T> implements Drawable {
 	

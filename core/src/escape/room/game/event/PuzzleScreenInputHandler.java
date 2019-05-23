@@ -1,8 +1,8 @@
 package escape.room.game.event;
 
 import com.badlogic.gdx.InputAdapter;
-import escape.room.game.screen.PuzzleScreen;
 import escape.room.game.gameobject.TouchableSprite;
+import escape.room.game.screen.PuzzleScreen;
 
 public class PuzzleScreenInputHandler extends InputAdapter {
 	

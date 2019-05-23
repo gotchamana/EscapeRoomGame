@@ -1,7 +1,7 @@
 package escape.room.game.gameobject;
 
-import escape.room.game.Drawable;
 import com.badlogic.gdx.graphics.g2d.*;
+import escape.room.game.Drawable;
 
 public class CustomSprite extends Sprite implements Drawable {
 
