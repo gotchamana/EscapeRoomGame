@@ -1,3 +1,11 @@
+# Introduction
+木木教授不久前收到大陸那邊傳來的甲骨文學術會議的通知，需要在這幾天內儘速前往，而會議那方則有食宿以供應木木教授。然而木木教授在前一晚抵達下榻處所並休息一宿之後，竟然發現自己被困在房間中出去不得，此外個人的通訊設備也都莫名地消失不見，再過幾小時後會議就要舉行，這下該如何逃出這間密室呢？
+
+# Download
+- Windows: [載點]()
+- Linux: [載點]()
+- Mac: [載點]()
+Windows的用戶只要將檔案解壓縮後，點擊「古文字密室逃脫.exe」即可進行遊戲。Linux的用戶需要執行「古文字密室逃脫.sh」。Mac的用戶稍微麻煩一點，要先下載、安裝[Java](https://www.java.com/zh_TW/)之後，然後再執行「java -jar EscapeRoomGame.jar」指令。
 
 # Credit
 這個遊戲單憑我一個人是不可能做出來的，裡頭所有素材幾乎全取自網路，以下便列出所有素材的取得來源及相關資訊
@@ -10,7 +18,7 @@
    - 電話按鍵聲: [beep_phone1.mp3](https://freesound.org/people/vtkproductions.com/sounds/64085/) made by [vtkproductions.com](https://freesound.org/people/vtkproductions.com/) is licensed by [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
    - 解鎖聲: [Door_Unlocking.wav](https://freesound.org/people/IPaddeh/sounds/422852/) made by [IPaddeh](https://freesound.org/people/IPaddeh/) is licensed by [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)
 - 圖片
-   - 火焰動畫: Fire animation made by [FoshyTakashi](https://opengameart.org/users/foshytakashi) is licensed by [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/deed.en)
+   - 火焰動畫: [Fire animation](https://opengameart.org/content/9-frame-fire-animation-16x-32x-64x) made by [FoshyTakashi](https://opengameart.org/users/foshytakashi) is licensed by [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/deed.en)
    - 門: [House vector created by Patrickss - www.freepik.com](https://www.freepik.com/free-photos-vectors/house)
    - 櫃子: Icon made by [Nikita Golubev](https://www.flaticon.com/authors/nikita-golubev) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
    - 座燈: Icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
@@ -20,7 +28,7 @@
    - 石頭: Icon made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
    - 手機: [Mockup vector created by rawpixel.com - www.freepik.com](https://www.freepik.com/free-photos-vectors/mockup)
    - 植物: [Tree vector created by freepik - www.freepik.com](https://www.freepik.com/free-photos-vectors/tree)
-   - 電視桌: [House vector created by frimufilms - www.freepik.com](https://www.freepik.com/free-photos-vectors/house)
+   - 電視、電視桌: [House vector created by frimufilms - www.freepik.com](https://www.freepik.com/free-photos-vectors/house)
    - 膠帶: Icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
    - 星星: [Logo vector created by rawpixel.com - www.freepik.com](https://www.freepik.com/free-photos-vectors/logo)
    - 日記: [Book vector created by freepik - www.freepik.com](https://www.freepik.com/free-photos-vectors/book)
