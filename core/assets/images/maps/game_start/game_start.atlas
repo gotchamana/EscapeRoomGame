@@ -7,13 +7,13 @@ repeat: none
 bg
   rotate: false
   xy: 2, 2
-  size: 640, 480
-  orig: 640, 480
+  size: 700, 480
+  orig: 700, 480
   offset: 0, 0
   index: -1
 door
   rotate: false
-  xy: 644, 269
+  xy: 704, 269
   size: 164, 213
   orig: 164, 213
   offset: 0, 0

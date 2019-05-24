@@ -9,7 +9,6 @@ import escape.room.game.*;
 import escape.room.game.event.*;
 import escape.room.game.gameobject.*;
 import escape.room.game.ui.*;
-// import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.audio.Music;
