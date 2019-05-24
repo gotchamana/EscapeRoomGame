@@ -2,9 +2,10 @@
 木木教授不久前收到大陸那邊傳來的甲骨文學術會議的通知，需要在這幾天內儘速前往，而會議那方則有食宿以供應木木教授。然而木木教授在前一晚抵達下榻處所並休息一宿之後，竟然發現自己被困在房間中出去不得，此外個人的通訊設備也都莫名地消失不見，再過幾小時後會議就要舉行，這下該如何逃出這間密室呢？
 
 # Download
-- Windows: [載點]()
-- Linux: [載點]()
-- Mac: [載點]()
+- Windows: [載點](https://github.com/gotchamana/EscapeRoomGame/releases/download/v1.0/Windows.zip)
+- Linux: [載點](https://github.com/gotchamana/EscapeRoomGame/releases/download/v1.0/Linux.zip)
+- Mac: [載點](https://github.com/gotchamana/EscapeRoomGame/releases/download/v1.0/Mac.zip)
+
 Windows的用戶只要將檔案解壓縮後，點擊「古文字密室逃脫.exe」即可進行遊戲。Linux的用戶需要執行「古文字密室逃脫.sh」。Mac的用戶稍微麻煩一點，要先下載、安裝[Java](https://www.java.com/zh_TW/)之後，然後再執行「java -jar EscapeRoomGame.jar」指令。
 
 # Credit
