@@ -1,0 +1,13 @@
+
+game_over.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 2, 2
+  size: 700, 480
+  orig: 700, 480
+  offset: 0, 0
+  index: -1

@@ -48,16 +48,23 @@ password_box
   index: -1
 slate
   rotate: false
-  xy: 801, 455
+  xy: 644, 82
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 star
   rotate: false
-  xy: 644, 93
+  xy: 738, 343
   size: 39, 34
   orig: 39, 34
+  offset: 0, 0
+  index: -1
+star_broken
+  rotate: false
+  xy: 801, 461
+  size: 54, 39
+  orig: 54, 39
   offset: 0, 0
   index: -1
 window_broken

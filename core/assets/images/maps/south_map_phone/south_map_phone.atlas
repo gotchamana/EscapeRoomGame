@@ -1,0 +1,104 @@
+
+south_map_phone.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 2, 2
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+button0
+  rotate: false
+  xy: 644, 311
+  size: 51, 55
+  orig: 51, 55
+  offset: 0, 0
+  index: -1
+button1
+  rotate: false
+  xy: 697, 369
+  size: 51, 55
+  orig: 51, 55
+  offset: 0, 0
+  index: -1
+button10
+  rotate: false
+  xy: 644, 197
+  size: 51, 55
+  orig: 51, 55
+  offset: 0, 0
+  index: -1
+button11
+  rotate: false
+  xy: 697, 255
+  size: 51, 55
+  orig: 51, 55
+  offset: 0, 0
+  index: -1
+button2
+  rotate: false
+  xy: 750, 427
+  size: 51, 55
+  orig: 51, 55
+  offset: 0, 0
+  index: -1
+button3
+  rotate: false
+  xy: 644, 254
+  size: 51, 55
+  orig: 51, 55
+  offset: 0, 0
+  index: -1
+button4
+  rotate: false
+  xy: 697, 312
+  size: 51, 55
+  orig: 51, 55
+  offset: 0, 0
+  index: -1
+button5
+  rotate: false
+  xy: 750, 370
+  size: 51, 55
+  orig: 51, 55
+  offset: 0, 0
+  index: -1
+button6
+  rotate: false
+  xy: 644, 426
+  size: 51, 56
+  orig: 51, 56
+  offset: 0, 0
+  index: -1
+button7
+  rotate: false
+  xy: 644, 368
+  size: 51, 56
+  orig: 51, 56
+  offset: 0, 0
+  index: -1
+button8
+  rotate: false
+  xy: 697, 426
+  size: 51, 56
+  orig: 51, 56
+  offset: 0, 0
+  index: -1
+button9
+  rotate: false
+  xy: 803, 427
+  size: 51, 55
+  orig: 51, 55
+  offset: 0, 0
+  index: -1
+call
+  rotate: false
+  xy: 750, 317
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1

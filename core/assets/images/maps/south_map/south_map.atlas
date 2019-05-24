@@ -6,63 +6,91 @@ filter: Nearest,Nearest
 repeat: none
 aquarium
   rotate: false
-  xy: 842, 418
-  size: 107, 88
-  orig: 107, 88
+  xy: 842, 421
+  size: 109, 88
+  orig: 109, 88
   offset: 0, 0
   index: -1
 bg
   rotate: false
-  xy: 2, 26
+  xy: 2, 29
   size: 640, 480
   orig: 640, 480
   offset: 0, 0
   index: -1
 hole
   rotate: false
-  xy: 842, 287
+  xy: 842, 238
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 lamp_dark
   rotate: false
-  xy: 644, 255
+  xy: 644, 258
   size: 196, 251
   orig: 196, 251
   offset: 0, 0
   index: -1
 lamp_light
   rotate: false
-  xy: 644, 2
+  xy: 644, 5
   size: 196, 251
   orig: 196, 251
   offset: 0, 0
   index: -1
 lower_drawer
   rotate: false
-  xy: 842, 377
+  xy: 842, 380
   size: 102, 39
   orig: 102, 39
   offset: 0, 0
   index: -1
 slate
   rotate: false
-  xy: 842, 240
+  xy: 894, 293
   size: 45, 45
   orig: 45, 45
   offset: 0, 0
   index: -1
 socket
   rotate: false
-  xy: 951, 456
+  xy: 953, 459
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
+socket_connect
+  rotate: false
+  xy: 842, 288
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+turtle
+  rotate: false
+  xy: 2, 2
+  size: 38, 25
+  orig: 38, 25
+  offset: 0, 0
+  index: -1
+turtle_body
+  rotate: false
+  xy: 953, 432
+  size: 38, 25
+  orig: 38, 25
+  offset: 0, 0
+  index: -1
+turtle_shell
+  rotate: false
+  xy: 842, 221
+  size: 28, 15
+  orig: 28, 15
+  offset: 0, 0
+  index: -1
 upper_drawer
   rotate: false
-  xy: 842, 337
+  xy: 842, 340
   size: 102, 38
   orig: 102, 38
   offset: 0, 0

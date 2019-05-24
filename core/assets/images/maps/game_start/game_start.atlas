@@ -1,0 +1,20 @@
+
+game_start.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bg
+  rotate: false
+  xy: 2, 2
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+door
+  rotate: false
+  xy: 644, 269
+  size: 164, 213
+  orig: 164, 213
+  offset: 0, 0
+  index: -1

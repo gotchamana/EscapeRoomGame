@@ -9,10 +9,33 @@ import escape.room.game.*;
 import escape.room.game.event.*;
 import escape.room.game.gameobject.*;
 import escape.room.game.ui.*;
-import java.util.concurrent.atomic.AtomicInteger;
+// import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 
 public class ERScreen implements Screen {
+
+	private class AtomicInteger {
+		private int integer;
+
+		AtomicInteger(int integer) {
+			this.integer = integer;
+		}
+
+		int get() {
+			return integer;
+		}
+
+		void set(int integer) {
+			this.integer = integer;
+		}
+
+		int incrementAndGet() {
+			integer++;
+			return integer;
+		}
+	}
 
 	private EscapeRoomGame game;
 	private AssetManager assetManager;
@@ -22,9 +45,10 @@ public class ERScreen implements Screen {
 	private GameData gameData;
 
 	private Map currentMap, eastMap, eastMapFireplaceTop, eastMapFireplaceFront;
-	private Map southMap, southMapAquarium,southMapLowerDrawer, southMapUpperDrawer, southMapSocket;
+	private Map southMap, southMapAquarium,southMapLowerDrawer, southMapUpperDrawer, southMapPhone, southMapSocket;
 	private Map westMap, westMapPlant, westMapTV;
 	private Map northMap, northMapDesk, northMapMap, northMapStar, northMapClock, northMapDiary, northMapPasswordBox;
+	private Map gameStart, gameOver;
 	private TouchableSprite completeStar;
 
 	public ERScreen(EscapeRoomGame game) {
@@ -54,7 +78,9 @@ public class ERScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
-		itemTray.draw(batch);
+		if (!(currentMap == gameStart || currentMap == gameOver)) {
+			itemTray.draw(batch);
+		}
 		currentMap.draw(batch, delta);
 		batch.end();
 	}
@@ -104,7 +130,15 @@ public class ERScreen implements Screen {
 		eastSlate.setPosition(299, 142);
 
 		// 空洞
+		Sound wind = assetManager.get("sounds/wind.mp3");
 		CustomAnimation<Sprite> fireAnim = new CustomAnimation<>(0.10f, mapAtlas.createSprites("fire"), CustomAnimation.PlayMode.LOOP);
+		Consumer<Boolean> fireBurnOutFun = e -> {
+			if (e) {
+				wind.play();
+				eastMap.removeDrawableObject(fireAnim);
+				gameData.setIsFireBurning(false);
+			}
+		};
 		TouchableSprite hole = new TouchableSprite(createSprite(mapAtlas, "hole"));
 		hole.setPosition(297, 141);
 		hole.setOnTouchDown(e -> {
@@ -114,10 +148,7 @@ public class ERScreen implements Screen {
 				cell.removeItem();
 				eastSlate.setVisible(true);
 				gameData.setIsEastHoleEmpty(false);
-				if (checkFireBurnOutEvent()) {
-					eastMap.removeDrawableObject(fireAnim);
-					gameData.setIsFireBurning(false);
-				}
+				fireBurnOutFun.accept(checkFireBurnOutEvent());
 				return true;
 			}
 			return false;
@@ -346,6 +377,18 @@ public class ERScreen implements Screen {
 			currentMap = southMapAquarium;
 			return true;
 		});
+		
+		// 完整烏龜
+		CustomSprite turtle = createSprite(mapAtlas, "turtle");
+		turtle.setPosition(224, 282);
+
+		// 分離之龜殼
+		CustomSprite smallTurtleShell = createSprite(mapAtlas, "turtle_shell", false);
+		smallTurtleShell.setPosition(224, 289);
+
+		// 分離之烏龜
+		CustomSprite smallTurtleBody = createSprite(mapAtlas, "turtle_body", false);
+		smallTurtleBody.setPosition(274, 271);
 
 		// 石板
 		CustomSprite southSlate = createSprite(mapAtlas, "slate", false);
@@ -361,10 +404,7 @@ public class ERScreen implements Screen {
 				cell.removeItem();
 				southSlate.setVisible(true);
 				gameData.setIsSouthHoleEmpty(false);
-				if (checkFireBurnOutEvent()) {
-					eastMap.removeDrawableObject(fireAnim);
-					gameData.setIsFireBurning(false);
-				}
+				fireBurnOutFun.accept(checkFireBurnOutEvent());
 				return true;
 			}
 			return false;
@@ -387,12 +427,14 @@ public class ERScreen implements Screen {
 		});
 
 		// 上方抽屜
+		Sound unlock = assetManager.get("sounds/unlock.mp3");
 		TouchableSprite upperDrawer = new TouchableSprite(createSprite(mapAtlas, "upper_drawer"));
 		upperDrawer.setPosition(220, 333);
 		upperDrawer.setOnTouchDown(e -> {
 			if (gameData.isDrawerLock()) {
 				Cell cell = itemTray.getSelectedCell(); 
 				if (cell != null && cell.getItem() == Item.KEY) { 
+					unlock.play();
 					cell.removeItem();
 					gameData.setIsDrawerLock(false);
 				}
@@ -406,6 +448,13 @@ public class ERScreen implements Screen {
 		TouchableSprite socket = new TouchableSprite(createSprite(mapAtlas, "socket"));
 		socket.setPosition(63, 392);
 		socket.setOnTouchDown(e -> {
+			currentMap = southMapSocket;
+			return true;
+		});
+
+		TouchableSprite socketConnect = new TouchableSprite(createSprite(mapAtlas, "socket_connect"), false);
+		socketConnect.setPosition(63, 392);
+		socketConnect.setOnTouchDown(e -> {
 			currentMap = southMapSocket;
 			return true;
 		});
@@ -424,7 +473,7 @@ public class ERScreen implements Screen {
 		});
 
 		southMap = new Map();
-		southMap.addDrawableObjects(bg, aquarium, hole, southSlate, lowerDrawer, upperDrawer, lampDark, lampLight, socket, arrowLeft, arrowRight);
+		southMap.addDrawableObjects(bg, aquarium, turtle, smallTurtleBody, smallTurtleShell, hole, southSlate, lowerDrawer, upperDrawer, lampDark, lampLight, socket, socketConnect, arrowLeft, arrowRight);
 
 		// 南邊地圖之水族箱
 		mapAtlas = assetManager.get("images/maps/south_map_aquarium/south_map_aquarium.atlas");
@@ -443,6 +492,8 @@ public class ERScreen implements Screen {
 		turtleShell.setOnTouchDown(e -> {
 			southMapAquarium.removeDrawableObject(turtleShell);
 			itemTray.addItem(Item.SHELL);
+
+			southMap.removeDrawableObject(smallTurtleShell);
 			return true;
 		});
 
@@ -485,6 +536,10 @@ public class ERScreen implements Screen {
 		// 手機
 		TouchableSprite phone = new TouchableSprite(createSprite(mapAtlas, "phone"));
 		phone.setPosition(265, 125);
+		phone.setOnTouchDown(e -> {
+			currentMap = southMapPhone;
+			return true;
+		});
 
 		// 箭頭
 		arrowDown = createArrow(Arrow.ArrowType.DOWN, uiAtlas);
@@ -495,6 +550,87 @@ public class ERScreen implements Screen {
 
 		southMapUpperDrawer = new Map();
 		southMapUpperDrawer.addDrawableObjects(bg, phone, arrowDown);
+
+		// 南邊地圖之手機
+		mapAtlas = assetManager.get("images/maps/south_map_phone/south_map_phone.atlas");
+
+		// 背景
+		bg = createSprite(mapAtlas, "bg");
+
+		// 號碼
+		CustomFont font = new CustomFont(assetManager.get("fonts/font.fnt"), true);
+		font.setColor(Color.WHITE);
+		font.setPosition(220, 100);
+		font.setTargetWidth(200);
+		font.setHalign(16);
+
+		// 按鈕
+		Sound beep = assetManager.get("sounds/phone_beep.mp3");
+		TouchableSprite[] buttons = new TouchableSprite[13];
+		for (int i = 0; i < buttons.length - 1; i++) {
+			buttons[i] = new TouchableSprite(createSprite(mapAtlas, "button" + i));
+			buttons[i].setPosition(229 + 60 * (i % 3), 156 + (i / 3) * 54);
+			switch (i) {
+				case 9: 
+					buttons[i].setOnTouchDown(e -> {
+						font.setContent(font.getContent() + "*");
+						beep.play();
+						return true;
+					});
+					break;
+					
+				case 10: 
+					buttons[i].setOnTouchDown(e -> {
+						font.setContent(font.getContent() + 0);
+						beep.play();
+						return true;
+					});
+					break;
+
+				case 11: 
+					buttons[i].setOnTouchDown(e -> {
+						font.setContent(font.getContent() + "#");
+						beep.play();
+						return true;
+					});
+					break;
+
+				default:
+					AtomicInteger index = new AtomicInteger(i);
+					buttons[i].setOnTouchDown(e -> {
+						font.setContent(font.getContent() + (index.get() + 1));
+						beep.play();
+						return true;
+					});
+			}
+		}
+
+		buttons[12] = new TouchableSprite(createSprite(mapAtlas, "call"));
+		buttons[12].setPosition(289, 375);
+		buttons[12].setOnTouchDown(e -> {
+			switch (font.getContent()) {
+				case "110": 
+				case "119":
+				case "112":
+					currentMap = gameOver;
+					break;
+				default:
+					font.setContent("");
+					beep.play();
+			}
+			return true;
+		});
+
+		// 箭頭
+		arrowDown = createArrow(Arrow.ArrowType.DOWN, uiAtlas);
+		arrowDown.setOnTouchDown(e -> {
+			currentMap = southMapUpperDrawer;
+			return true;
+		});
+
+		southMapPhone = new Map();
+		southMapPhone.addDrawableObjects(bg, font, arrowDown);
+		southMapPhone.addDrawableObjects(buttons);
 
 		// 南邊地圖之插座處
 		mapAtlas = assetManager.get("images/maps/south_map_socket/south_map_socket.atlas");
@@ -519,6 +655,11 @@ public class ERScreen implements Screen {
 				completeWire.setVisible(true);
 				southMapSocket.removeDrawableObject(brokenWire);
 
+				// 全局地圖也要把電線接起來
+				southMap.removeDrawableObject(socket);
+				socketConnect.setVisible(true);
+				socketConnect.setTouchable(true);
+
 				// 讓燈亮起來
 				lampLight.setVisible(true);
 				southMap.removeDrawableObject(lampDark);
@@ -529,6 +670,11 @@ public class ERScreen implements Screen {
 				southMapAquarium.addDrawableObject(turtleBody);
 				turtleBody.rotate(90);
 				turtleBody.setPosition(325, 80);
+
+				// 全局地圖也要改變烏龜的狀態
+				southMap.removeDrawableObject(turtle);
+				smallTurtleShell.setVisible(true);
+				smallTurtleBody.setVisible(true);
 
 				return true;
 			}
@@ -565,10 +711,7 @@ public class ERScreen implements Screen {
 				cell.removeItem();
 				westSlate.setVisible(true);
 				gameData.setIsWestHoleEmpty(false);
-				if (checkFireBurnOutEvent()) {
-					eastMap.removeDrawableObject(fireAnim);
-					gameData.setIsFireBurning(false);
-				}
+				fireBurnOutFun.accept(checkFireBurnOutEvent());
 				return true;
 			}
 			return false;
@@ -655,6 +798,13 @@ public class ERScreen implements Screen {
 			return true;
 		});
 
+		TouchableSprite tvBroken = new TouchableSprite(createSprite(mapAtlas, "tv_broken"), false);
+		tvBroken.setPosition(222, 219);
+		tvBroken.setOnTouchDown(e -> {
+			currentMap = westMapTV;
+			return true;
+		});
+
 		// 箭頭
 		arrowLeft = createArrow(Arrow.ArrowType.LEFT, uiAtlas);
 		arrowLeft.setOnTouchDown(e -> {
@@ -669,7 +819,7 @@ public class ERScreen implements Screen {
 		});
 
 		westMap = new Map();
-		westMap.addDrawableObjects(bg, hole, westSlate, plant, tape, puzzle, leftDrawerClose, leftDrawerOpen, rightDrawerClose, rightDrawerOpen, tv, arrowLeft, arrowRight);
+		westMap.addDrawableObjects(bg, hole, westSlate, plant, tape, puzzle, leftDrawerClose, leftDrawerOpen, rightDrawerClose, rightDrawerOpen, tv, tvBroken, arrowLeft, arrowRight);
 
 		// 西邊地圖之盆栽
 		mapAtlas = assetManager.get("images/maps/west_map_plant/west_map_plant.atlas");
@@ -712,16 +862,23 @@ public class ERScreen implements Screen {
 		});
 
 		// 電視
+		Sound tvBreak = assetManager.get("sounds/tv_break.mp3");
 		TouchableSprite completeTV = new TouchableSprite(createSprite(mapAtlas, "tv_complete"));
 		completeTV.setPosition(97, 117);
 		completeTV.setOnTouchDown(e -> {
 			Cell cell = itemTray.getSelectedCell();
 
 			if (cell != null && cell.getItem() == Item.HAMMER) {
+				tvBreak.play();
 				westMapTV.removeDrawableObject(completeTV);
 
 				touchableSouthSlate.setVisible(true);
 				touchableSouthSlate.setTouchable(true);
+
+				// 全局地圖也要改變電視狀態
+				westMap.removeDrawableObject(tv);
+				tvBroken.setVisible(true);
+				tvBroken.setTouchable(true);
 			}
 			return true;
 		});
@@ -773,11 +930,6 @@ public class ERScreen implements Screen {
 		CustomSprite northSlate = createSprite(mapAtlas, "slate", false);
 		northSlate.setPosition(299, 142);
 
-		/* Consumer<Boolean> fireBurnFun = e -> {
-			if (e) {
-			}
-		}; */
-
 		// 空洞
 		hole = new TouchableSprite(createSprite(mapAtlas, "hole"));
 		hole.setPosition(297, 141);
@@ -788,10 +940,7 @@ public class ERScreen implements Screen {
 				cell.removeItem();
 				northSlate.setVisible(true);
 				gameData.setIsNorthHoleEmpty(false);
-				if (checkFireBurnOutEvent()) {
-					eastMap.removeDrawableObject(fireAnim);
-					gameData.setIsFireBurning(false);
-				}
+				fireBurnOutFun.accept(checkFireBurnOutEvent());
 				return true;
 			}
 			return false;
@@ -809,6 +958,13 @@ public class ERScreen implements Screen {
 		TouchableSprite star = new TouchableSprite(createSprite(mapAtlas, "star"), false);
 		star.setPosition(466, 431);
 		star.setOnTouchDown(e -> {
+			currentMap = northMapStar;
+			return true;
+		});
+
+		TouchableSprite starBroken = new TouchableSprite(createSprite(mapAtlas, "star_broken"), false);
+		starBroken.setPosition(456, 427);
+		starBroken.setOnTouchDown(e -> {
 			currentMap = northMapStar;
 			return true;
 		});
@@ -834,7 +990,7 @@ public class ERScreen implements Screen {
 		});
 
 		northMap = new Map();
-		northMap.addDrawableObjects(bg, star, clock, diary, passwordBox, drawer, hole, northSlate, completeWindow, brokenWindow, arrowLeft, arrowRight);
+		northMap.addDrawableObjects(bg, star, starBroken, clock, diary, passwordBox, drawer, hole, northSlate, completeWindow, brokenWindow, arrowLeft, arrowRight);
 
 		// 北邊地圖之時鐘
 		mapAtlas = assetManager.get("images/maps/north_map_clock/north_map_clock.atlas");
@@ -850,8 +1006,10 @@ public class ERScreen implements Screen {
 		}
 
 		AtomicInteger decimalIndex = new AtomicInteger(0);
+		Sound windowBroken = assetManager.get("sounds/window_break.mp3");
 		Consumer<Boolean> windowBrokenFun = e -> {
 			if (e) {
+				windowBroken.play();
 				northMap.removeDrawableObject(completeWindow);
 				brokenWindow.setVisible(true);
 				star.setVisible(true);
@@ -870,10 +1028,7 @@ public class ERScreen implements Screen {
 
 				gameData.setDecimalCycle(DecimalCycle.valueOf("DECIMAL_CYCLE" + (nextIndex + 1)));
 				windowBrokenFun.accept(checkWindowBrokenEvent());
-				if (checkFireBurnOutEvent()) {
-					eastMap.removeDrawableObject(fireAnim);
-					gameData.setIsFireBurning(false);
-				}
+				fireBurnOutFun.accept(checkFireBurnOutEvent());
 
 				decimalCycles[currentIndex].setVisible(false);
 				decimalCycles[currentIndex].setTouchable(false);
@@ -904,10 +1059,7 @@ public class ERScreen implements Screen {
 
 				gameData.setDuodecimalCycle(DuodecimalCycle.valueOf("DUODECIMAL_CYCLE" + (nextIndex + 1)));
 				windowBrokenFun.accept(checkWindowBrokenEvent());
-				if (checkFireBurnOutEvent()) {
-					eastMap.removeDrawableObject(fireAnim);
-					gameData.setIsFireBurning(false);
-				}
+				fireBurnOutFun.accept(checkFireBurnOutEvent());
 
 				duodecimalCycles[currentIndex].setVisible(false);
 				duodecimalCycles[currentIndex].setTouchable(false);
@@ -1267,6 +1419,7 @@ public class ERScreen implements Screen {
 		});
 
 		// 星星
+		Sound starBreak = assetManager.get("sounds/star_break.mp3");
 		CustomSprite brokenStar = createSprite(mapAtlas, "star_broken", false);
 		brokenStar.setPosition(88, 124);
 
@@ -1277,6 +1430,7 @@ public class ERScreen implements Screen {
 
 			if (cell != null && cell.getItem() == Item.HAMMER) {
 				// 星星破掉
+				starBreak.play();
 				brokenStar.setVisible(true);
 
 				// 石板顯現
@@ -1285,6 +1439,11 @@ public class ERScreen implements Screen {
 
 				// 移除完整的星星
 				northMapStar.removeDrawableObject(completeStar);
+
+				// 全局地圖也要改變星星狀態
+				northMap.removeDrawableObject(star);
+				starBroken.setVisible(true);
+				starBroken.setTouchable(true);
 			}
 			return false;
 		});
@@ -1299,7 +1458,38 @@ public class ERScreen implements Screen {
 		northMapStar = new Map();
 		northMapStar.addDrawableObjects(bg, completeStar, brokenStar, touchableNorthSlate, arrowDown);
 
-		currentMap = eastMap;
+		// 遊戲開始
+		mapAtlas = assetManager.get("images/maps/game_start/game_start.atlas");
+
+		// 背景
+		bg = createSprite(mapAtlas, "bg");
+		
+		// 開始按鈕
+		TouchableSprite door = new TouchableSprite(createSprite(mapAtlas, "door"));
+		door.setPosition(195, 24);
+		door.setOnTouchDown(e -> {
+			currentMap = eastMap;
+			return true;
+		});
+
+		gameStart = new Map();
+		gameStart.addDrawableObjects(bg, door);
+
+		// 遊戲結束
+		mapAtlas = assetManager.get("images/maps/game_over/game_over.atlas");
+
+		// 背景
+		bg = createSprite(mapAtlas, "bg");
+
+		gameOver = new Map();
+		gameOver.addDrawableObjects(bg);
+
+		// 背景音樂
+		Music bgm = assetManager.get("musics/bgm.mp3");
+		bgm.play();
+		bgm.setLooping(true);
+
+		currentMap = gameStart;
 	}
 
 	private Arrow createArrow(Arrow.ArrowType type, TextureAtlas textureAtlas) {
