@@ -8,6 +8,10 @@
 
 Windows的用戶只要將檔案解壓縮後，點擊「古文字密室逃脫.exe」即可進行遊戲。Linux的用戶需要執行「古文字密室逃脫.sh」。Mac的用戶稍微麻煩一點，要先下載、安裝[Java](https://www.java.com/zh_TW/)之後，然後再執行「java -jar EscapeRoomGame.jar」指令。
 
+# Video
+遊戲Demo影片
+<iframe width="853" height="480" src="https://www.youtube.com/embed/sD5sO0TCWYM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 # Credit
 這個遊戲單憑我一個人是不可能做出來的，裡頭所有素材幾乎全取自網路，以下便列出所有素材的取得來源及相關資訊
 - 背景音樂: [Stopping By the Inn](http://www.twinmusicom.org/song/298/stopping-by-the-inn) by [Twin Musicom](http://www.twinmusicom.org) is licensed under a [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/)
@@ -28,6 +32,7 @@ Windows的用戶只要將檔案解壓縮後，點擊「古文字密室逃脫.exe
    - 烏龜: Icon made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
    - 石頭: Icon made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
    - 手機: [Mockup vector created by rawpixel.com - www.freepik.com](https://www.freepik.com/free-photos-vectors/mockup)
+   - 撥號按鈕: Icon made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
    - 植物: [Tree vector created by freepik - www.freepik.com](https://www.freepik.com/free-photos-vectors/tree)
    - 電視、電視桌: [House vector created by frimufilms - www.freepik.com](https://www.freepik.com/free-photos-vectors/house)
    - 膠帶: Icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
