@@ -8,12 +8,15 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 	<link rel="shortcut icon" href="/EscapeRoomGame/core/assets/images/icons/32x32.png">
 	<style type="text/css" media="screen">
-		video-wrapper{
+		.video-container {
 			position: relative;
-			padding-bottom: 56.25%;  //16:9
-			overflow: hidden;
+			padding-bottom: 56.25%;
+			padding-top: 30px; height: 0; overflow: hidden;
 		}
-		video-wrapper iframe{
+
+		.video-container iframe,
+		.video-container object,
+		.video-container embed {
 			position: absolute;
 			top: 0;
 			left: 0;
