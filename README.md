@@ -10,7 +10,7 @@ Windows的用戶只要將檔案解壓縮後，點擊「古文字密室逃脫.exe
 
 # Video
 遊戲Demo影片
-<iframe width="853" height="480" src="https://www.youtube.com/embed/sD5sO0TCWYM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/sD5sO0TCWYM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 # Credit
 這個遊戲單憑我一個人是不可能做出來的，裡頭所有素材幾乎全取自網路，以下便列出所有素材的取得來源及相關資訊
